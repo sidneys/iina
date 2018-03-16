@@ -391,6 +391,8 @@ CA
                             <menuItem title="Music Mode" id="bGN-E4-V5A">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                             </menuItem>
+                            <menuItem isSeparatorItem="YES" id="sea-8r-DA6"/>
+                            <menuItem title="Wallpaper Mode" keyEquivalent="W" id="Z7i-iM-Aog" userLabel="Wallpaper Mode"/>
                             <menuItem isSeparatorItem="YES" id="4J5-eU-sei"/>
                             <menuItem title="Aspect Ratio" id="d15-8v-dXA">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -774,6 +776,7 @@ CA
                 <outlet property="videoTrack" destination="j8P-Gb-HR7" id="hho-ys-R88"/>
                 <outlet property="videoTrackMenu" destination="FTu-CF-O0R" id="Iw7-fm-Ryz"/>
                 <outlet property="volumeIndicator" destination="iQF-1S-9EK" id="grJ-Ta-Elr"/>
+                <outlet property="wallpaperMode" destination="Z7i-iM-Aog" id="TuF-N8-aYe"/>
             </connections>
         </customObject>
         <menu id="fxS-xv-Jb2">

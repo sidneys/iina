@@ -125,6 +125,9 @@ class MainWindowController: PlayerWindowController {
   var isWindowHidden: Bool = false
   var isWindowMiniaturizedDueToPip = false
 
+  var wallpaperWindow: WallpaperWindow?
+  var isWallpaperMode: Bool = false
+
   // might use another obj to handle slider?
   var isMouseInWindow: Bool = false
   var isMouseInSlider: Bool = false
@@ -1059,6 +1062,8 @@ class MainWindowController: PlayerWindowController {
     cv.trackingAreas.forEach(cv.removeTrackingArea)
     playSlider.trackingAreas.forEach(playSlider.removeTrackingArea)
     UserDefaults.standard.set(NSStringFromRect(window!.frame), forKey: "MainWindowLastPosition")
+
+    NotificationCenter.default.post(name: .iinaMainWindowClosed, object: player)
   }
 
   // MARK: - Window delegate: Full screen
@@ -1238,6 +1243,11 @@ class MainWindowController: PlayerWindowController {
 
   func toggleWindowFullScreen() {
     guard let window = self.window else { fatalError("make sure the window exists before animating") }
+
+    // Exit wallpaper mode if necessary
+    if isWallpaperMode {
+      disableWallpaperMode()
+    }
 
     switch fsState {
     case .windowed:
@@ -2226,6 +2236,11 @@ class MainWindowController: PlayerWindowController {
     guard !fsState.isFullscreen else { return }
     super.setWindowFloatingOnTop(onTop, updateOnTopStatus: updateOnTopStatus)
 
+    // Exit wallpaper mode if necessary
+    if isWallpaperMode {
+      disableWallpaperMode()
+    }
+
     resetCollectionBehavior()
     // don't know why they will be disabled
     standardWindowButtons.forEach { $0.isEnabled = true }
@@ -2523,6 +2538,54 @@ class MainWindowController: PlayerWindowController {
     }
   }
 
+  // MARK: Wallpaper Mode
+
+  func enableWallpaperMode() {
+    // create window
+    let window = WallpaperWindow(player: player)
+
+    // persist window
+    wallpaperWindow = window
+
+    // show overlay
+    wallpaperModeOverlayView.isHidden = false
+
+    // update state
+    isWallpaperMode = true
+
+    Utility.log("Wallpaper Mode enabled.")
+  }
+
+  func disableWallpaperMode() {
+    // remove window
+    wallpaperWindow?.orderOut(self)
+    wallpaperWindow = nil
+
+    // hide overlay
+    wallpaperModeOverlayView.isHidden = true
+
+    // update state
+    isWallpaperMode = false
+
+    Utility.log("Wallpaper Mode disabled.")
+  }
+
+  func toggleWallpaperMode() {
+    if (isWallpaperMode) {
+      disableWallpaperMode()
+    } else {
+      enableWallpaperMode()
+    }
+  }
+
+  /** This method will not set `isWallpaperMode`! */
+  func setWindowWallpaperMode(_ wallpaperMode: Bool) {
+    if (!wallpaperMode) {
+      disableWallpaperMode()
+    } else {
+      enableWallpaperMode()
+    }
+  }
 }
 
 // MARK: - Picture in Picture
@@ -2531,7 +2594,16 @@ class MainWindowController: PlayerWindowController {
 extension MainWindowController: PIPViewControllerDelegate {
 
   func enterPIP() {
-    guard pipStatus != .inPIP else { return }
+    // Exit fullscreen if necessary
+    if fsState.isFullscreen {
+      toggleWindowFullScreen()
+    }
+
+    // Exit wallpaper mode if necessary
+    if isWallpaperMode {
+       disableWallpaperMode()
+    }
+
     pipStatus = .inPIP
     showUI()
 

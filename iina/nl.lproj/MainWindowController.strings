@@ -1,2 +1,6 @@
 /* Class = "NSTextFieldCell"; title = "This video is playing in picture in picture"; ObjectID = "gdE-b5-kod"; */
 "gdE-b5-kod.title" = "Deze video wordt beeld in beeld afgespeeld.";
+
+/* Class = "NSTextFieldCell"; title = "This video is playing in Wallpaper Mode"; ObjectID = "Sec-55-PE9"; */
+"Sec-55-PE9.title" = "Deze video wordt afgespeeld in wallpaper";
+

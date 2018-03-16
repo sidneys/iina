@@ -118,6 +118,7 @@ class MenuController: NSObject, NSMenuDelegate {
   @IBOutlet weak var delogo: NSMenuItem!
   @IBOutlet weak var videoFilters: NSMenuItem!
   @IBOutlet weak var savedVideoFiltersMenu: NSMenu!
+  @IBOutlet weak var wallpaperMode: NSMenuItem!
   //Audio
   @IBOutlet weak var audioMenu: NSMenu!
   @IBOutlet weak var quickSettingsAudio: NSMenuItem!
@@ -254,6 +255,7 @@ class MenuController: NSObject, NSMenuDelegate {
       videoMenu.removeItem(pictureInPicture)
     }
     alwaysOnTop.action = #selector(MainWindowController.menuAlwaysOnTop(_:))
+    wallpaperMode.action = #selector(MainWindowController.menuWallpaperMode(_:))
 
     // -- aspect
     var aspectList = AppData.aspects
@@ -450,6 +452,8 @@ class MenuController: NSObject, NSMenuDelegate {
     let isOntop = PlayerCore.active.isInMiniPlayer ? PlayerCore.active.miniPlayer.isOntop : PlayerCore.active.mainWindow.isOntop
     let isDelogo = PlayerCore.active.info.delogoFilter != nil
     alwaysOnTop.state = isOntop ? .on : .off
+    let isWallpaperMode = PlayerCore.active.mainWindow.isWallpaperMode
+    wallpaperMode.state = isWallpaperMode ? .on : .off
     deinterlace.state = PlayerCore.active.info.deinterlace ? .on : .off
     fullScreen.title = isInFullScreen ? Constants.String.exitFullScreen : Constants.String.fullScreen
     pictureInPicture?.title = isInPIP ? Constants.String.exitPIP : Constants.String.pip
