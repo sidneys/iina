@@ -62,7 +62,7 @@
                 <outlet property="titlebarAccessoryView" destination="maF-Zr-K8w" id="nvF-H7-z8G"/>
                 <outlet property="titlebarOnTopButton" destination="Ztc-Kn-fxI" id="xCA-hX-VpW"/>
                 <outlet property="volumeSlider" destination="SAG-kc-FAt" id="zM0-Gg-vfy"/>
-                <outlet property="wallpaperModeOverlayView" destination="HPj-RU-KSD" id="7dv-If-ybV"/>
+                <outlet property="wallpaperModeOverlayView" destination="V5p-Jq-Cuk" id="vC6-2k-McI"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -192,6 +192,23 @@
                             <constraint firstItem="YkI-ii-zaW" firstAttribute="centerX" secondItem="Nrz-jZ-Luf" secondAttribute="centerX" id="JAE-TE-I2W"/>
                             <constraint firstItem="pxV-jX-kfL" firstAttribute="top" secondItem="YkI-ii-zaW" secondAttribute="bottom" constant="8" id="VX9-W1-IMy"/>
                             <constraint firstItem="YkI-ii-zaW" firstAttribute="centerY" secondItem="Nrz-jZ-Luf" secondAttribute="centerY" id="hhc-1u-xpc"/>
+                        </constraints>
+                    </visualEffectView>
+                    <visualEffectView hidden="YES" blendingMode="behindWindow" material="underWindowBackground" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="V5p-Jq-Cuk" userLabel="Wallpaper Overlay View">
+                        <rect key="frame" x="0.0" y="0.0" width="640" height="400"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cnM-9v-j9z">
+                                <rect key="frame" x="199" y="192" width="243" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="This video is playing in Wallpaper Mode" id="G36-NO-AlQ">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="cnM-9v-j9z" firstAttribute="centerY" secondItem="V5p-Jq-Cuk" secondAttribute="centerY" id="cwi-OG-hhS"/>
+                            <constraint firstItem="cnM-9v-j9z" firstAttribute="centerX" secondItem="V5p-Jq-Cuk" secondAttribute="centerX" id="qJI-MG-pc6"/>
                         </constraints>
                     </visualEffectView>
                     <visualEffectView hidden="YES" wantsLayer="YES" blendingMode="withinWindow" material="popover" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="oX4-0N-but">
@@ -375,7 +392,6 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="g0O-v5-RQj" secondAttribute="bottom" constant="8" id="0pt-vB-Ycm"/>
-                    <constraint firstAttribute="trailing" secondItem="HPj-RU-KSD" secondAttribute="trailing" id="2To-di-c8z"/>
                     <constraint firstAttribute="trailing" secondItem="DFb-1L-U9o" secondAttribute="trailing" id="3qV-vK-qlg"/>
                     <constraint firstItem="OiF-pA-8Sd" firstAttribute="centerX" secondItem="se5-gp-TjO" secondAttribute="leading" priority="249" constant="330" id="9z2-rX-b7C"/>
                     <constraint firstItem="HPj-RU-KSD" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" id="B6v-ay-6gD"/>
@@ -383,15 +399,20 @@
                     <constraint firstAttribute="trailing" secondItem="epo-S6-QVB" secondAttribute="trailing" constant="-240" id="PAj-s6-32e"/>
                     <constraint firstItem="Nrz-jZ-Luf" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" id="RFd-ZJ-29u"/>
                     <constraint firstItem="Qbi-jx-9pO" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="se5-gp-TjO" secondAttribute="leading" constant="8" id="RUl-l8-s3i"/>
+                    <constraint firstItem="V5p-Jq-Cuk" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" id="TOv-zE-Wkp"/>
                     <constraint firstItem="Nrz-jZ-Luf" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" id="Vtd-0f-x7p"/>
                     <constraint firstItem="oX4-0N-but" firstAttribute="centerY" secondItem="se5-gp-TjO" secondAttribute="centerY" id="XlV-7n-jPb"/>
+                    <constraint firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" id="ZgP-bF-xmb"/>
                     <constraint firstItem="g0O-v5-RQj" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="8" id="a6R-6Y-zu3"/>
                     <constraint firstAttribute="bottom" secondItem="OiF-pA-8Sd" secondAttribute="bottom" priority="750" constant="50" id="cRP-R4-zYY"/>
-                    <constraint firstItem="HPj-RU-KSD" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" id="cYw-Pb-8P6"/>
+                    <constraint firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" id="cYw-Pb-8P6"/>
+                    <constraint firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" id="e5b-dd-Ph5"/>
                     <constraint firstAttribute="bottom" secondItem="DFb-1L-U9o" secondAttribute="bottom" id="eLf-C3-GlT"/>
+                    <constraint firstItem="V5p-Jq-Cuk" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" id="ejS-vI-rMf"/>
+                    <constraint firstAttribute="bottom" secondItem="V5p-Jq-Cuk" secondAttribute="bottom" id="eju-nO-ZXh"/>
                     <constraint firstItem="DFb-1L-U9o" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" id="gbo-9y-nvn"/>
                     <constraint firstItem="g0O-v5-RQj" firstAttribute="top" secondItem="TRx-2V-Gr3" secondAttribute="bottom" constant="8" id="hAe-Tn-76i"/>
-                    <constraint firstAttribute="bottom" secondItem="HPj-RU-KSD" secondAttribute="bottom" id="ilj-iq-CJ6"/>
+                    <constraint firstAttribute="trailing" secondItem="V5p-Jq-Cuk" secondAttribute="trailing" id="hZs-Dr-yaZ"/>
                     <constraint firstItem="epo-S6-QVB" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" id="jpv-dz-Kql"/>
                     <constraint firstAttribute="bottom" secondItem="Nrz-jZ-Luf" secondAttribute="bottom" id="kHE-py-RY5"/>
                     <constraint firstItem="oX4-0N-but" firstAttribute="centerX" secondItem="se5-gp-TjO" secondAttribute="centerX" id="kfR-hG-8ee"/>

@@ -309,6 +309,7 @@ class MainWindowController: PlayerWindowController {
     .arrowButtonAction,
     .pinchAction,
     .blackOutMonitor,
+    .wallpaperMode,
     .useLegacyFullScreen,
     .displayTimeAndBatteryInFullScreen,
     .controlBarToolbarButtons,
@@ -351,6 +352,12 @@ class MainWindowController: PlayerWindowController {
           newValue ? blackOutOtherMonitors() : removeBlackWindow()
         }
       }
+
+    case PK.wallpaperMode.rawValue:
+      if let newValue = change[.newKey] as? Bool {
+        setWindowWallpaperMode(newValue)
+      }
+
     case PK.useLegacyFullScreen.rawValue:
       resetCollectionBehavior()
     case PK.displayTimeAndBatteryInFullScreen.rawValue:
@@ -451,8 +458,10 @@ class MainWindowController: PlayerWindowController {
 
   @IBOutlet weak var pipOverlayView: NSVisualEffectView!
 
-  lazy var subPopoverView = playlistView.subPopover?.contentViewController?.view
+  @IBOutlet weak var wallpaperModeOverlayView: NSVisualEffectView!
 
+  lazy var subPopoverView = playlistView.subPopover?.contentViewController?.view
+  
   var videoViewConstraints: [NSLayoutConstraint.Attribute: NSLayoutConstraint] = [:]
   private var oscFloatingLeadingTrailingConstraint: [NSLayoutConstraint]?
 
@@ -545,7 +554,7 @@ class MainWindowController: PlayerWindowController {
       titleBarBottomBorder.fillColor = NSColor(named: .titleBarBorder)!
     }
     cachedScreenCount = NSScreen.screens.count
-    [titleBarView, osdVisualEffectView, controlBarBottom, controlBarFloating, sideBarView, osdVisualEffectView, pipOverlayView].forEach {
+    [titleBarView, osdVisualEffectView, controlBarBottom, controlBarFloating, sideBarView, osdVisualEffectView, pipOverlayView, wallpaperModeOverlayView].forEach {
       $0?.state = .active
     }
     // hide other views
@@ -557,6 +566,8 @@ class MainWindowController: PlayerWindowController {
     timePreviewWhenSeek.isHidden = true
     bottomView.isHidden = true
     pipOverlayView.isHidden = true
+
+    wallpaperModeOverlayView?.isHidden = true
 
     // add user default observers
     observedPrefKeys.append(contentsOf: localObservedPrefKeys)
@@ -595,7 +606,7 @@ class MainWindowController: PlayerWindowController {
     let isDarkTheme = appearance?.isDark ?? true
     (playSlider.cell as? PlaySliderCell)?.isInDarkTheme = isDarkTheme
 
-    [titleBarView, controlBarFloating, controlBarBottom, osdVisualEffectView, pipOverlayView, additionalInfoView, bufferIndicatorView].forEach {
+    [titleBarView, controlBarFloating, controlBarBottom, osdVisualEffectView, pipOverlayView, additionalInfoView, bufferIndicatorView, wallpaperModeOverlayView].forEach {
       $0?.material = material
       $0?.appearance = appearance
     }
@@ -1030,6 +1041,13 @@ class MainWindowController: PlayerWindowController {
 
     // update timer
     updateTimer()
+
+    // wallpaper mode
+    if Preference.bool(for: .wallpaperMode) {
+      isWallpaperMode = true
+      setWindowWallpaperMode(true)
+    }
+
     // truncate middle for title
     if let attrTitle = titleTextField?.attributedStringValue.mutableCopy() as? NSMutableAttributedString, attrTitle.length > 0 {
       let p = attrTitle.attribute(.paragraphStyle, at: 0, effectiveRange: nil) as! NSMutableParagraphStyle
@@ -2548,12 +2566,12 @@ class MainWindowController: PlayerWindowController {
     wallpaperWindow = window
 
     // show overlay
-    wallpaperModeOverlayView.isHidden = false
+    wallpaperModeOverlayView?.isHidden = false
 
     // update state
     isWallpaperMode = true
 
-    Utility.log("Wallpaper Mode enabled.")
+    Logger.log("Wallpaper Mode enabled.")
   }
 
   func disableWallpaperMode() {
@@ -2562,12 +2580,12 @@ class MainWindowController: PlayerWindowController {
     wallpaperWindow = nil
 
     // hide overlay
-    wallpaperModeOverlayView.isHidden = true
+    wallpaperModeOverlayView?.isHidden = true
 
     // update state
     isWallpaperMode = false
 
-    Utility.log("Wallpaper Mode disabled.")
+    Logger.log("Wallpaper Mode disabled.")
   }
 
   func toggleWallpaperMode() {

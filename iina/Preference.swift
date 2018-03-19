@@ -75,6 +75,7 @@ struct Preference {
 
     static let alwaysFloatOnTop = Key("alwaysFloatOnTop")
     static let alwaysShowOnTopIcon = Key("alwaysShowOnTopIcon")
+    static let wallpaperMode = Key("wallpaperMode")
 
     static let pauseWhenMinimized = Key("pauseWhenMinimized")
     static let pauseWhenInactive = Key("pauseWhenInactive")
@@ -687,6 +688,7 @@ struct Preference {
     .useAppleRemote: false,
     .alwaysFloatOnTop: false,
     .alwaysShowOnTopIcon: false,
+    .wallpaperMode: false,
     .blackOutMonitor: false,
     .pauseWhenMinimized: false,
     .pauseWhenInactive: false,
