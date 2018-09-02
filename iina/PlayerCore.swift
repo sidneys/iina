@@ -253,10 +253,23 @@ class PlayerCore: NSObject {
       mainWindow.showWindow(nil)
       mainWindow.windowDidOpen()
     }
-    // Send load file command
-    info.fileLoading = true
-    info.justOpenedFile = true
-    mpv.command(.loadfile, args: [path])
+    Logger.log("\t\t 30")
+    DispatchQueue.main.asyncAfter(deadline: .now() + 25.0) {
+      Logger.log("\t\t 5")
+      DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+        Logger.log("\t\t 3")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+          Logger.log("\t\t 1")
+          DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            Logger.log("\t\t 0")
+            // Send load file command
+            self.info.fileLoading = true
+            self.info.justOpenedFile = true
+            self.mpv.command(.loadfile, args: [path])
+          }
+        }
+      }
+    }
   }
 
   static func loadKeyBindings() {
