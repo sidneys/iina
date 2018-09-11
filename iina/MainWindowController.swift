@@ -97,8 +97,6 @@ class MainWindowController: PlayerWindowController {
   var cachedScreenCount = 0
   var blackWindows: [NSWindow] = []
   
-  /** Detached Playlist */
-  var isFloatingPlaylist = false
   var playlistWindow: PlaylistWindow?
 
   lazy var rotation: Int = {
@@ -313,7 +311,8 @@ class MainWindowController: PlayerWindowController {
     .useLegacyFullScreen,
     .displayTimeAndBatteryInFullScreen,
     .controlBarToolbarButtons,
-    .alwaysShowOnTopIcon
+    .alwaysShowOnTopIcon,
+    .playlistFloating
   ]
 
   override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
@@ -367,6 +366,15 @@ class MainWindowController: PlayerWindowController {
       }
     case PK.alwaysShowOnTopIcon.rawValue:
       updateOnTopIcon()
+    case PK.playlistFloating.rawValue:
+      if let newValue = change[.newKey] as? Bool {
+        if (newValue == true) {
+          enablePlaylistFloating()
+        } else {
+          disablePlaylistFloating()
+        }
+      }
+
     default:
       return
     }
@@ -541,6 +549,11 @@ class MainWindowController: PlayerWindowController {
     window.contentView?.addSubview(thumbnailPeekView)
     thumbnailPeekView.isHidden = true
 
+    // restore floating playlist setting
+    if Preference.bool(for: .playlistFloating) == true {
+      enablePlaylistFloating()
+    }
+
     // other initialization
     if #available(macOS 10.14, *) {
       titleBarBottomBorder.fillColor = NSColor(named: .titleBarBorder)!
@@ -604,10 +617,11 @@ class MainWindowController: PlayerWindowController {
     sideBarView.material = .dark
     sideBarView.appearance = NSAppearance(named: .vibrantDark)
 
+
     window.appearance = appearance
 
     // Apply appearance to detached playlist
-    if isFloatingPlaylist {
+    if self.isPlaylistFloating() {
       playlistWindow?.appearance = appearance;
       playlistWindow?.wrapperView?.material = material
       playlistWindow?.wrapperView?.appearance = appearance
@@ -2441,8 +2455,8 @@ class MainWindowController: PlayerWindowController {
   /// Legacy IBAction, but still in use.
   func playlistButtonAction(_ sender: AnyObject) {
     // disable detached playlist if necessary
-    if isFloatingPlaylist {
-      disableFloatingPlaylist()
+    if self.isPlaylistFloating() {
+      disablePlaylistFloating()
     }
     if sidebarAnimationState == .willShow || sidebarAnimationState == .willHide {
       return  // do not interrput other actions while it is animating
@@ -2550,7 +2564,13 @@ class MainWindowController: PlayerWindowController {
 
   // MARK: Detached Playlist
 
-  func enableFloatingPlaylist() {
+  func isPlaylistFloating() -> Bool {
+    return self.playlistWindow != nil
+  }
+
+  func enablePlaylistFloating() {
+    guard !self.isPlaylistFloating() else { return }
+
     // get playlist view reference
     let view = playlistView.view
 
@@ -2575,33 +2595,29 @@ class MainWindowController: PlayerWindowController {
     // persist window
     playlistWindow = window
 
-    // update state
-    isFloatingPlaylist = true
-
-    Logger.log("Floating Playlist enabled.")
+    Logger.log("Attached Playlist to Player Window", level: .debug)
   }
 
-  func disableFloatingPlaylist() {
+  func disablePlaylistFloating() {
+    guard self.isPlaylistFloating() else { return }
+
     // remove window
-    playlistWindow?.orderOut(self)
+    playlistWindow?.performClose(self)
     playlistWindow = nil
 
-    // update state
-    isFloatingPlaylist = false
+    // show sidebar
+    if sideBarStatus == .hidden {
+      playlistButtonAction(self)
+    }
 
-    Logger.log("Floating Playlist disabled.")
+    Logger.log("Detached Playlist into seperate Window", level: .debug)
   }
 
-  func toggleFloatingPlaylist() {
-    // disable detached playlist if necessary
-    if (self.isFloatingPlaylist) {
-      disableFloatingPlaylist()
-      // show sidebar
-      if sideBarStatus == .hidden {
-        playlistButtonAction(self)
-      }
+  func togglePlaylistFloating() {
+    if self.isPlaylistFloating() == true {
+      Preference.set(false, for: .playlistFloating)
     } else {
-      enableFloatingPlaylist()
+      Preference.set(true, for: .playlistFloating)
     }
   }
 }

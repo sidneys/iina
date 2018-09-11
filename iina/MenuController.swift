@@ -82,7 +82,7 @@ class MenuController: NSObject, NSMenuDelegate {
   @IBOutlet weak var abLoop: NSMenuItem!
   @IBOutlet weak var fileLoop: NSMenuItem!
   @IBOutlet weak var playlistPanel: NSMenuItem!
-  @IBOutlet weak var floatingPlaylist: NSMenuItem!
+  @IBOutlet weak var playlistFloating: NSMenuItem!
   @IBOutlet weak var playlist: NSMenuItem!
   @IBOutlet weak var playlistLoop: NSMenuItem!
   @IBOutlet weak var playlistMenu: NSMenu!
@@ -226,7 +226,7 @@ class MenuController: NSObject, NSMenuDelegate {
     chapterMenu.delegate = self
     playlistLoop.action = #selector(MainMenuActionHandler.menuPlaylistLoop(_:))
     playlistPanel.action = #selector(MainWindowController.menuShowPlaylistPanel(_:))
-    floatingPlaylist.action = #selector(MainWindowController.menuToggleFloatingPlaylist(_:))
+    playlistFloating.action = #selector(MainWindowController.menuTogglePlaylistFloating(_:))
     chapterPanel.action = #selector(MainWindowController.menuShowChaptersPanel(_:))
 
     nextMedia.action = #selector(MainMenuActionHandler.menuNextMedia(_:))
@@ -444,6 +444,8 @@ class MenuController: NSObject, NSMenuDelegate {
     let isPlaylistLoop = player.mpv.getString(MPVOption.PlaybackControl.loopPlaylist)
     playlistLoop.state = (isPlaylistLoop == "inf" || isPlaylistLoop == "force") ? .on : .off
     speedIndicator.title = String(format: NSLocalizedString("menu.speed", comment: "Speed:"), player.info.playSpeed)
+    let isPlaylistFloating = PlayerCore.active.mainWindow.isPlaylistFloating()
+    playlistFloating.state = isPlaylistFloating ? .on : .off
   }
 
   private func updateVideoMenu() {

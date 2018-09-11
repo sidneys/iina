@@ -129,6 +129,8 @@ struct Preference {
     static let playlistWidth = Key("playlistWidth")
     static let prefetchPlaylistVideoDuration = Key("prefetchPlaylistVideoDuration")
 
+    static let playlistFloating = Key("playlistFloating")
+
     static let enableThumbnailPreview = Key("enableThumbnailPreview")
     static let maxThumbnailPreviewCacheSize = Key("maxThumbnailPreviewCacheSize")
     static let enableThumbnailForRemoteFiles = Key("enableThumbnailForRemoteFiles")
@@ -671,6 +673,7 @@ struct Preference {
     .oscPosition: OSCPosition.floating.rawValue,
     .playlistWidth: 270,
     .prefetchPlaylistVideoDuration: true,
+    .playlistFloating: false,
     .themeMaterial: Theme.dark.rawValue,
     .enableOSD: true,
     .osdAutoHideTimeout: Float(1),

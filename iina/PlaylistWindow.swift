@@ -8,17 +8,21 @@
 
 import Cocoa
 
-class PlaylistWindow: NSWindow {
+
+fileprivate let WindowTitle = "Playlist"
+fileprivate let WindowFrameAutosaveName = "IINAPlaylist"
+
+class PlaylistWindow: NSWindow, NSWindowDelegate {
   
   weak private var player: PlayerCore!
 
   var wrapperView: NSVisualEffectView?
 
   init(player: PlayerCore, view: NSView) {
-    // retain player reference
+    // set player reference
     self.player = player
 
-    // MARK: Position & Size
+    // MARK: Initial Position & Size
     // get playlist views' container window
     let window = self.player.mainWindow.window
 
@@ -37,20 +41,28 @@ class PlaylistWindow: NSWindow {
     // MARK: Super
     super.init(contentRect:targetRectangle, styleMask: [.fullSizeContentView, .titled, .resizable], backing: .buffered, defer: false)
 
+    // set delegate
+    self.delegate = self
+
+    // MARK: windowController
+    self.windowController?.shouldCascadeWindows = false
+
     // MARK: Appearance
-    self.styleMask = [.fullSizeContentView, .titled, .resizable]
+    self.title = WindowTitle
+    self.styleMask = [.fullSizeContentView, .titled, .resizable, .closable]
     self.initialFirstResponder = nil
     self.level = (window?.level)!
     self.isMovableByWindowBackground = true
     self.appearance = window?.appearance
     self.titlebarAppearsTransparent = true
     self.titleVisibility = .visible
-    self.title = "Playlist"
     self.isOpaque = true
     self.makeKeyAndOrderFront(nil)
 
-    // MARK: Setup Content View
-    // create wrapper view
+    // MARK: Restore Position & Size
+    restoreFrame()
+
+    // MARK: contentView / Wrapper
     wrapperView = NSVisualEffectView(frame: targetRectangle)
     wrapperView?.material = player.mainWindow.sideBarView.material
     wrapperView?.appearance = player.mainWindow.sideBarView.appearance
@@ -58,10 +70,30 @@ class PlaylistWindow: NSWindow {
     wrapperView?.state = .active
     self.contentView = wrapperView
 
-    // MARK: Notifications
-    // close playlist window when mainWindow closes
+    // MARK: Notifications / Events
+    // detect when mainWindow closes
     NotificationCenter.default.addObserver(forName: .iinaMainWindowClosed, object: player, queue: .main) { _ in
-      self.orderOut(self)
+      self.performClose(nil)
     }
+  }
+
+  func storeFrame() {
+    let data = NSKeyedArchiver.archivedData(withRootObject: self.frame)
+    UserDefaults.standard.set(data, forKey: WindowFrameAutosaveName)
+  }
+
+  func restoreFrame() {
+    guard let data = UserDefaults.standard.data(forKey: WindowFrameAutosaveName),
+      let frame = NSKeyedUnarchiver.unarchiveObject(with: data) as? NSRect else { return }
+
+    self.setFrame(frame, display: true)
+  }
+
+  func windowWillMiniaturize(_ notification: Notification) {
+    storeFrame()
+  }
+
+  func windowWillClose(_ notification: Notification) {
+    storeFrame()
   }
 }

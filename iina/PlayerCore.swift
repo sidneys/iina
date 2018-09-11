@@ -369,6 +369,10 @@ class PlayerCore: NSObject {
     mainWindow.playlistView.useCompactTabHeight = true
     miniPlayer.playlistWrapperView.addSubview(playlistView)
     Utility.quickConstraints(["H:|[v]|", "V:|[v]|"], ["v": playlistView])
+
+    // move playist window
+    mainWindow.disablePlaylistFloating()
+
     // move video view
     videoView.removeFromSuperview()
     miniPlayer.videoWrapperView.addSubview(videoView, positioned: .below, relativeTo: nil)
@@ -1331,7 +1335,7 @@ class PlayerCore: NSObject {
     case .chapterList:
       DispatchQueue.main.async {
         // this should avoid sending reload when table view is not ready
-        if self.isInMiniPlayer ? self.miniPlayer.isPlaylistVisible : self.mainWindow.sideBarStatus == .playlist || self.mainWindow.isFloatingPlaylist {
+        if self.isInMiniPlayer ? self.miniPlayer.isPlaylistVisible : self.mainWindow.sideBarStatus == .playlist || self.mainWindow.isPlaylistFloating() {
           self.mainWindow.playlistView.chapterTableView.reloadData()
         }
       }

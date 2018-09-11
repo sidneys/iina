@@ -422,7 +422,7 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
   }
 
   @IBAction func floatBtnAction(_ sender: AnyObject) {
-    mainWindow.toggleFloatingPlaylist()
+    mainWindow.togglePlaylistFloating()
   }
 
   @objc func performDoubleAction(sender: AnyObject) {
