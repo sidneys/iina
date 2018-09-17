@@ -549,7 +549,7 @@ class MainWindowController: PlayerWindowController {
     window.contentView?.addSubview(thumbnailPeekView)
     thumbnailPeekView.isHidden = true
 
-    // restore floating playlist setting
+    // load preference for playlist floating
     if Preference.bool(for: .playlistFloating) == true {
       enablePlaylistFloating()
     }
@@ -617,14 +617,11 @@ class MainWindowController: PlayerWindowController {
     sideBarView.material = .dark
     sideBarView.appearance = NSAppearance(named: .vibrantDark)
 
-
     window.appearance = appearance
 
-    // Apply appearance to detached playlist
+    // apply appearance to detached playlist
     if self.isPlaylistFloating() {
-      playlistWindow?.appearance = appearance;
-      playlistWindow?.wrapperView?.material = material
-      playlistWindow?.wrapperView?.appearance = appearance
+      playlistWindow?.setAppearance(appearance: appearance, material: material)
     }
   }
 
@@ -2454,12 +2451,12 @@ class MainWindowController: PlayerWindowController {
 
   /// Legacy IBAction, but still in use.
   func playlistButtonAction(_ sender: AnyObject) {
-    // disable detached playlist if necessary
-    if self.isPlaylistFloating() {
-      disablePlaylistFloating()
-    }
     if sidebarAnimationState == .willShow || sidebarAnimationState == .willHide {
       return  // do not interrput other actions while it is animating
+    }
+    // disable detached playlist if necessary
+    if isPlaylistFloating() {
+      disablePlaylistFloating()
     }
     let view = playlistView
     switch sideBarStatus {
@@ -2569,55 +2566,47 @@ class MainWindowController: PlayerWindowController {
   }
 
   func enablePlaylistFloating() {
-    guard !self.isPlaylistFloating() else { return }
-
-    // get playlist view reference
+    // lookup playlist view
     let view = playlistView.view
 
-    // reset down shift for playlistView
+    // set playlist view down shift amount
     playlistView.downShift = 22
 
     // hide sidebar
-    if sideBarStatus != .hidden {
-      hideSideBar(animate: false)
+    self.hideSideBar {
+      // create playlist window
+      let playlistWindow = PlaylistWindowController(playerCore: self.player, playlistView: view)
+
+      // assign playlist window as property to main window
+      self.playlistWindow = playlistWindow.window as? PlaylistWindow
+
+      // save preference state
+      Preference.set(true, for: .playlistFloating)
     }
 
-    // create window
-    let window = PlaylistWindow(player: player, view: view)
-
-    // move playlist view to window
-    view.removeFromSuperview()
-    window.contentView?.addSubview(view)
-
-    // update playlist view constraints
-    Utility.quickConstraints(["H:|[v]|", "V:|[v]|"], ["v": view])
-
-    // persist window
-    playlistWindow = window
-
+    // Status
     Logger.log("Attached Playlist to Player Window", level: .debug)
   }
 
   func disablePlaylistFloating() {
-    guard self.isPlaylistFloating() else { return }
+    // close playlist window
+    self.playlistWindow?.performClose(self)
 
-    // remove window
-    playlistWindow?.performClose(self)
-    playlistWindow = nil
+    // nilify window
+    self.playlistWindow = nil
 
-    // show sidebar
-    if sideBarStatus == .hidden {
-      playlistButtonAction(self)
-    }
+    // save preference state
+    Preference.set(false, for: .playlistFloating)
 
+    // Status
     Logger.log("Detached Playlist into seperate Window", level: .debug)
   }
 
   func togglePlaylistFloating() {
     if self.isPlaylistFloating() == true {
-      Preference.set(false, for: .playlistFloating)
+      disablePlaylistFloating()
     } else {
-      Preference.set(true, for: .playlistFloating)
+      enablePlaylistFloating()
     }
   }
 }

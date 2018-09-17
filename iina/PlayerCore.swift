@@ -357,6 +357,12 @@ class PlayerCore: NSObject {
     miniPlayer.updateTitle()
     let playlistView = mainWindow.playlistView.view
     let videoView = mainWindow.videoView
+
+    // disable playlist floating
+    if mainWindow.isPlaylistFloating() {
+      mainWindow.disablePlaylistFloating()
+    }
+
     // reset down shift for playlistView
     mainWindow.playlistView.downShift = 0
     // hide sidebar
@@ -369,9 +375,6 @@ class PlayerCore: NSObject {
     mainWindow.playlistView.useCompactTabHeight = true
     miniPlayer.playlistWrapperView.addSubview(playlistView)
     Utility.quickConstraints(["H:|[v]|", "V:|[v]|"], ["v": playlistView])
-
-    // move playist window
-    mainWindow.disablePlaylistFloating()
 
     // move video view
     videoView.removeFromSuperview()
