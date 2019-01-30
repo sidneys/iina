@@ -14,6 +14,7 @@
                 <outlet property="chapterTableView" destination="BvG-MR-6LX" id="WoF-Wg-fqX"/>
                 <outlet property="chaptersBtn" destination="SOR-3l-PFj" id="W2q-tm-TA0"/>
                 <outlet property="deleteBtn" destination="7my-AM-8Ts" id="wTg-jz-wRa"/>
+                <outlet property="floatBtn" destination="cKC-Ss-KQI" id="blC-CP-AsI"/>
                 <outlet property="loopBtn" destination="IHI-5g-OMg" id="Sev-F9-8Dg"/>
                 <outlet property="playlistBtn" destination="5Zq-JQ-XO4" id="iAS-Co-wFQ"/>
                 <outlet property="playlistTableView" destination="xIa-sI-0Xn" id="JVO-9u-NdG"/>
@@ -46,11 +47,11 @@
                                             <rect key="frame" x="0.0" y="0.0" width="236" height="258"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <tableView focusRingType="none" verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" tableStyle="fullWidth" columnResizing="NO" autosaveColumns="NO" rowHeight="26" viewBased="YES" id="xIa-sI-0Xn">
+                                                <tableView focusRingType="none" verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" columnResizing="NO" autosaveColumns="NO" rowHeight="26" viewBased="YES" id="xIa-sI-0Xn" tableStyle="fullWidth" customClass="DraggableTableView" customModule="IINA" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="236" height="258"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
-                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.080000000000000002" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
                                                     <tableViewGridLines key="gridStyleMask" horizontal="YES"/>
                                                     <color key="gridColor" red="1" green="1" blue="1" alpha="0.10000000000000001" colorSpace="calibratedRGB"/>
                                                     <tableColumns>
@@ -70,11 +71,16 @@
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="eZG-xB-blk">
+<<<<<<< HEAD
                                                                             <rect key="frame" x="0.0" y="1" width="23" height="16"/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="▶︎" id="4yj-cg-fli">
+=======
+                                                                            <rect key="frame" x="0.0" y="1" width="18" height="16"/>
+                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="▶︎" id="4yj-cg-fli" drawsBackground="YES">
+>>>>>>> a0442518... feat(detached-playlist-window): init (add PlaylistWindow class, add button UI to playlist xibs, add MainWindow close event handlers, integrate DraggableTableView)
                                                                                 <font key="font" metaFont="system"/>
                                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
                                                                             </textFieldCell>
                                                                             <connections>
                                                                                 <binding destination="o4q-SO-fgb" name="value" keyPath="objectValue" id="9C1-Rw-Bed"/>
@@ -123,18 +129,23 @@
                                                                         </button>
                                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="mzW-2W-iPg">
                                                                             <rect key="frame" x="13" y="1" width="96" height="16"/>
-                                                                            <textFieldCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" title="Table View Cell" id="M5s-Bm-l3O">
+                                                                            <textFieldCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" title="Table View Cell" id="M5s-Bm-l3O" drawsBackground="YES">
                                                                                 <font key="font" metaFont="system"/>
                                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
                                                                             </textFieldCell>
                                                                             <connections>
                                                                                 <binding destination="yTp-yO-UE2" name="value" keyPath="objectValue" id="tKP-cf-7LC"/>
                                                                             </connections>
                                                                         </textField>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yEn-uv-K8Z">
+<<<<<<< HEAD
                                                                             <rect key="frame" x="174" y="2" width="33" height="14"/>
                                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="zbw-ad-lgl">
+=======
+                                                                            <rect key="frame" x="184" y="2" width="33" height="14"/>
+                                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="zbw-ad-lgl" drawsBackground="YES">
+>>>>>>> a0442518... feat(detached-playlist-window): init (add PlaylistWindow class, add button UI to playlist xibs, add MainWindow close event handlers, integrate DraggableTableView)
                                                                                 <font key="font" metaFont="controlContent" size="11"/>
                                                                                 <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -232,8 +243,13 @@
                                                     <action selector="removeBtnAction:" target="-2" id="Ihy-Ga-m0c"/>
                                                 </connections>
                                             </button>
+<<<<<<< HEAD
                                             <button verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7my-AM-8Ts">
                                                 <rect key="frame" x="210" y="0.0" width="24" height="24"/>
+=======
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7my-AM-8Ts" userLabel="Clear Button">
+                                                <rect key="frame" x="215" y="0.0" width="24" height="24"/>
+>>>>>>> a0442518... feat(detached-playlist-window): init (add PlaylistWindow class, add button UI to playlist xibs, add MainWindow close event handlers, integrate DraggableTableView)
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="24" id="6gk-wr-fJW"/>
                                                 </constraints>
@@ -245,7 +261,7 @@
                                                     <action selector="clearPlaylistBtnAction:" target="-2" id="7IC-nt-T1t"/>
                                                 </connections>
                                             </button>
-                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IHI-5g-OMg">
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IHI-5g-OMg" userLabel="Loop Button">
                                                 <rect key="frame" x="2" y="0.0" width="24" height="24"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="24" id="CPL-cJ-9R5"/>
@@ -258,7 +274,7 @@
                                                     <action selector="loopBtnAction:" target="-2" id="nF4-D4-7dC"/>
                                                 </connections>
                                             </button>
-                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xhU-qn-3aa">
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xhU-qn-3aa" userLabel="Shuffle Button">
                                                 <rect key="frame" x="26" y="0.0" width="24" height="24"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="24" id="rpj-hJ-3Y9"/>
@@ -292,10 +308,24 @@
                                                     <action selector="addToPlaylistBtnAction:" target="-2" id="glx-Rv-Iri"/>
                                                 </connections>
                                             </button>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cKC-Ss-KQI" userLabel="Float Button">
+                                                <rect key="frame" x="143" y="0.0" width="24" height="24"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="24" id="5cn-Ug-qgv"/>
+                                                </constraints>
+                                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="float" imagePosition="overlaps" alignment="center" alternateImage="float-dark" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="i3j-at-e0Z">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="floatBtnAction:" target="-2" id="Ybl-0c-ZED"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="7my-AM-8Ts" secondAttribute="trailing" constant="2" id="1Sc-nK-8IE"/>
                                             <constraint firstItem="icQ-T6-fV9" firstAttribute="centerY" secondItem="X2W-MY-vYB" secondAttribute="centerY" id="6Cx-Tb-fT5"/>
+                                            <constraint firstAttribute="bottom" secondItem="cKC-Ss-KQI" secondAttribute="bottom" id="81q-lO-XIy"/>
                                             <constraint firstAttribute="bottom" secondItem="7my-AM-8Ts" secondAttribute="bottom" id="C8I-ns-vw9"/>
                                             <constraint firstAttribute="bottom" secondItem="W9C-Z7-hiI" secondAttribute="bottom" id="DTj-rn-hhY"/>
                                             <constraint firstItem="W9C-Z7-hiI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="icQ-T6-fV9" secondAttribute="trailing" constant="4" id="EMO-ZA-wUc"/>
@@ -305,7 +335,9 @@
                                             <constraint firstItem="icQ-T6-fV9" firstAttribute="centerX" secondItem="X2W-MY-vYB" secondAttribute="centerX" id="LSa-Bd-2wQ"/>
                                             <constraint firstItem="IHI-5g-OMg" firstAttribute="top" secondItem="X2W-MY-vYB" secondAttribute="top" id="VVG-ZO-opa"/>
                                             <constraint firstItem="xhU-qn-3aa" firstAttribute="leading" secondItem="IHI-5g-OMg" secondAttribute="trailing" id="beQ-YD-Oxf"/>
+                                            <constraint firstItem="cKC-Ss-KQI" firstAttribute="top" secondItem="X2W-MY-vYB" secondAttribute="top" id="faY-O0-raT"/>
                                             <constraint firstItem="xKm-J1-NZs" firstAttribute="leading" secondItem="W9C-Z7-hiI" secondAttribute="trailing" id="lwV-Uv-v1i"/>
+                                            <constraint firstItem="W9C-Z7-hiI" firstAttribute="leading" secondItem="cKC-Ss-KQI" secondAttribute="trailing" id="Uw6-Tf-H4F"/>
                                             <constraint firstAttribute="bottom" secondItem="xhU-qn-3aa" secondAttribute="bottom" id="mPm-LR-ZkL"/>
                                             <constraint firstItem="7my-AM-8Ts" firstAttribute="leading" secondItem="xKm-J1-NZs" secondAttribute="trailing" id="pEm-Ne-DNg"/>
                                             <constraint firstItem="xKm-J1-NZs" firstAttribute="top" secondItem="X2W-MY-vYB" secondAttribute="top" id="q0k-4V-oj8"/>
@@ -339,11 +371,16 @@
                                             <rect key="frame" x="0.0" y="0.0" width="241" height="294"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
+<<<<<<< HEAD
                                                 <tableView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" tableStyle="fullWidth" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="31" rowSizeStyle="automatic" viewBased="YES" id="BvG-MR-6LX">
                                                     <rect key="frame" x="0.0" y="0.0" width="241" height="294"/>
+=======
+                                                <tableView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="31" rowSizeStyle="automatic" viewBased="YES" id="BvG-MR-6LX" customClass="DraggableTableView" customModule="IINA" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="241" height="296"/>
+>>>>>>> a0442518... feat(detached-playlist-window): init (add PlaylistWindow class, add button UI to playlist xibs, add MainWindow close event handlers, integrate DraggableTableView)
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
-                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.080000000000000002" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
                                                     <tableViewGridLines key="gridStyleMask" horizontal="YES"/>
                                                     <color key="gridColor" red="1" green="1" blue="1" alpha="0.10000000000000001" colorSpace="calibratedRGB"/>
                                                     <tableColumns>
@@ -622,10 +659,19 @@
         </menu>
     </objects>
     <resources>
+<<<<<<< HEAD
         <image name="loop" width="15" height="15"/>
         <image name="loop-dark" width="15" height="15"/>
         <image name="minus" width="14" height="14"/>
         <image name="plus" width="14" height="14"/>
+=======
+        <image name="NSAddTemplate" width="11" height="11"/>
+        <image name="NSRemoveTemplate" width="11" height="11"/>
+        <image name="float" width="15" height="15"/>
+        <image name="float-dark" width="15" height="15"/>
+        <image name="loop" width="16" height="15"/>
+        <image name="loop-dark" width="16" height="15"/>
+>>>>>>> feat(detached-playlist-window): init (add PlaylistWindow class, add button UI to playlist xibs, add MainWindow close event handlers, integrate DraggableTableView)
         <image name="shuffle" width="15" height="15"/>
         <image name="shuffle-dark" width="15" height="15"/>
         <image name="sub-track" width="14" height="14"/>

@@ -47,13 +47,14 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
 
   var currentTab: TabViewType = .playlist
 
-  @IBOutlet weak var playlistTableView: NSTableView!
-  @IBOutlet weak var chapterTableView: NSTableView!
+  @IBOutlet weak var playlistTableView: DraggableTableView!
+  @IBOutlet weak var chapterTableView: DraggableTableView!
   @IBOutlet weak var playlistBtn: NSButton!
   @IBOutlet weak var chaptersBtn: NSButton!
   @IBOutlet weak var tabView: NSTabView!
   @IBOutlet weak var buttonTopConstraint: NSLayoutConstraint!
   @IBOutlet weak var tabHeightConstraint: NSLayoutConstraint!
+  @IBOutlet weak var floatBtn: NSButton!
   @IBOutlet weak var deleteBtn: NSButton!
   @IBOutlet weak var loopBtn: NSButton!
   @IBOutlet weak var shuffleBtn: NSButton!
@@ -85,7 +86,7 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
     }
     playlistTableView.menu?.delegate = self
 
-    [deleteBtn, loopBtn, shuffleBtn].forEach {
+    [deleteBtn, loopBtn, shuffleBtn, floatBtn].forEach {
       $0?.image?.isTemplate = true
       $0?.alternateImage?.isTemplate = true
     }
@@ -420,6 +421,9 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
     player.toggleShuffle()
   }
 
+  @IBAction func floatBtnAction(_ sender: AnyObject) {
+    mainWindow.toggleFloatingPlaylist()
+  }
 
   @objc func performDoubleAction(sender: AnyObject) {
     guard let tv = sender as? NSTableView, tv.numberOfSelectedRows > 0 else { return }

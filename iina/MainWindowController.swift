@@ -96,6 +96,10 @@ class MainWindowController: PlayerWindowController {
   var screens: [NSScreen] = []
   var cachedScreenCount = 0
   var blackWindows: [NSWindow] = []
+  
+  /** Detached Playlist */
+  var isFloatingPlaylist = false
+  var playlistWindow: PlaylistWindow?
 
   lazy var rotation: Int = {
     return player.mpv.getInt(MPVProperty.videoParamsRotate)
@@ -601,6 +605,13 @@ class MainWindowController: PlayerWindowController {
     sideBarView.appearance = NSAppearance(named: .vibrantDark)
 
     window.appearance = appearance
+
+    // Apply appearance to detached playlist
+    if isFloatingPlaylist {
+      playlistWindow?.appearance = appearance;
+      playlistWindow?.wrapperView?.material = material
+      playlistWindow?.wrapperView?.appearance = appearance
+    }
   }
 
 
@@ -1059,6 +1070,8 @@ class MainWindowController: PlayerWindowController {
     cv.trackingAreas.forEach(cv.removeTrackingArea)
     playSlider.trackingAreas.forEach(playSlider.removeTrackingArea)
     UserDefaults.standard.set(NSStringFromRect(window!.frame), forKey: "MainWindowLastPosition")
+
+    NotificationCenter.default.post(name: .iinaMainWindowClosed, object: player)
   }
 
   // MARK: - Window delegate: Full screen
@@ -1714,8 +1727,12 @@ class MainWindowController: PlayerWindowController {
     }
     sidebarAnimationState = .willShow
     let width = type.width()
-    sideBarWidthConstraint.constant = width
-    sideBarRightConstraint.constant = -width
+    if (sideBarWidthConstraint != nil) {
+      sideBarWidthConstraint.constant = width
+    }
+    if (sideBarRightConstraint != nil) {
+      sideBarRightConstraint.constant = -width
+    }
     sideBarView.isHidden = false
     // add view and constraints
     sideBarView.addSubview(view)
@@ -1729,7 +1746,9 @@ class MainWindowController: PlayerWindowController {
     NSAnimationContext.runAnimationGroup({ (context) in
       context.duration = SideBarAnimationDuration
       context.timingFunction = CAMediaTimingFunction(name: .easeIn)
-      sideBarRightConstraint.animator().constant = 0
+      if (sideBarRightConstraint != nil) {
+        sideBarRightConstraint.animator().constant = 0
+      }
     }) {
       self.sidebarAnimationState = .shown
       self.sideBarStatus = type
@@ -1742,7 +1761,9 @@ class MainWindowController: PlayerWindowController {
     NSAnimationContext.runAnimationGroup({ (context) in
       context.duration = animate ? SideBarAnimationDuration : 0
       context.timingFunction = CAMediaTimingFunction(name: .easeIn)
-      sideBarRightConstraint.animator().constant = -currWidth
+      if (sideBarRightConstraint != nil) {
+        sideBarRightConstraint.animator().constant = -currWidth
+      }
     }) {
       if self.sidebarAnimationState == .willHide {
         self.sideBarStatus = .hidden
@@ -2419,6 +2440,10 @@ class MainWindowController: PlayerWindowController {
 
   /// Legacy IBAction, but still in use.
   func playlistButtonAction(_ sender: AnyObject) {
+    // disable detached playlist if necessary
+    if isFloatingPlaylist {
+      disableFloatingPlaylist()
+    }
     if sidebarAnimationState == .willShow || sidebarAnimationState == .willHide {
       return  // do not interrput other actions while it is animating
     }
@@ -2523,6 +2548,62 @@ class MainWindowController: PlayerWindowController {
     }
   }
 
+  // MARK: Detached Playlist
+
+  func enableFloatingPlaylist() {
+    // get playlist view reference
+    let view = playlistView.view
+
+    // reset down shift for playlistView
+    playlistView.downShift = 22
+
+    // hide sidebar
+    if sideBarStatus != .hidden {
+      hideSideBar(animate: false)
+    }
+
+    // create window
+    let window = PlaylistWindow(player: player, view: view)
+
+    // move playlist view to window
+    view.removeFromSuperview()
+    window.contentView?.addSubview(view)
+
+    // update playlist view constraints
+    Utility.quickConstraints(["H:|[v]|", "V:|[v]|"], ["v": view])
+
+    // persist window
+    playlistWindow = window
+
+    // update state
+    isFloatingPlaylist = true
+
+    Logger.log("Floating Playlist enabled.")
+  }
+
+  func disableFloatingPlaylist() {
+    // remove window
+    playlistWindow?.orderOut(self)
+    playlistWindow = nil
+
+    // update state
+    isFloatingPlaylist = false
+
+    Logger.log("Floating Playlist disabled.")
+  }
+
+  func toggleFloatingPlaylist() {
+    // disable detached playlist if necessary
+    if (self.isFloatingPlaylist) {
+      disableFloatingPlaylist()
+      // show sidebar
+      if sideBarStatus == .hidden {
+        playlistButtonAction(self)
+      }
+    } else {
+      enableFloatingPlaylist()
+    }
+  }
 }
 
 // MARK: - Picture in Picture

@@ -136,7 +136,7 @@ class PlayerCore: NSObject {
   var useExactSeekForCurrentFile: Bool = true
   
   var isPlaylistVisible: Bool {
-    isInMiniPlayer ? miniPlayer.isPlaylistVisible : mainWindow.sideBarStatus == .playlist
+    isInMiniPlayer ? miniPlayer.isPlaylistVisible : mainWindow.sideBarStatus == .playlist || mainWindow.isFloatingPlaylist
   }
 
   static var keyBindings: [String: KeyMapping] = [:]
@@ -1331,7 +1331,7 @@ class PlayerCore: NSObject {
     case .chapterList:
       DispatchQueue.main.async {
         // this should avoid sending reload when table view is not ready
-        if self.isInMiniPlayer ? self.miniPlayer.isPlaylistVisible : self.mainWindow.sideBarStatus == .playlist {
+        if self.isInMiniPlayer ? self.miniPlayer.isPlaylistVisible : self.mainWindow.sideBarStatus == .playlist || self.mainWindow.isFloatingPlaylist {
           self.mainWindow.playlistView.chapterTableView.reloadData()
         }
       }
