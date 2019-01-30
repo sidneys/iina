@@ -97,6 +97,7 @@ struct Preference {
     static let playlistAutoPlayNext = Key("playlistAutoPlayNext")
     static let playlistShowMetadata = Key("playlistShowMetadata")
     static let playlistShowMetadataInMusicMode = Key("playlistShowMetadataInMusicMode")
+    static let playlistTextScale = Key("playlistTextScale")
 
     // UI
 
@@ -698,6 +699,7 @@ struct Preference {
     .playlistAutoPlayNext: true,
     .playlistShowMetadata: true,
     .playlistShowMetadataInMusicMode: true,
+    .playlistTextScale: 100,
 
     .usePhysicalResolution: true,
     .initialWindowSizePosition: "",

@@ -11,12 +11,42 @@ import Cocoa
 fileprivate let PrefixMinLength = 7
 fileprivate let FilenameMinLength = 12
 
+fileprivate let TextScaleMax: Int = 300
+fileprivate let TextScaleStep: Int = 25
+
 fileprivate let MenuItemTagCut = 601
 fileprivate let MenuItemTagCopy = 602
 fileprivate let MenuItemTagPaste = 603
 fileprivate let MenuItemTagDelete = 604
 
 class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate, NSMenuDelegate, SidebarViewController, NSMenuItemValidation {
+
+  // MARK: - Observed user defaults
+
+  /** A list of observed preference keys. */
+  private let observedPrefKeys: [Preference.Key] = [
+    .playlistTextScale
+  ]
+
+  /** Preference keys change handlers. */
+  override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
+    guard let keyPath = keyPath, let change = change else { return }
+
+    switch keyPath {
+
+    // playlistTextScale
+    case Preference.Key.playlistTextScale.rawValue:
+      if let newValue = change[.newKey] as? Int {
+        self.reloadData(playlist: true, chapters: false)
+        Logger.log("Preference.Key.playlistTextScale: \(newValue.description)", level: .debug)
+      }
+
+    default:
+      return
+    }
+  }
+
+  // MARK: - Initialization
 
   override var nibName: NSNib.Name {
     return NSNib.Name("PlaylistViewController")
@@ -58,6 +88,7 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
   @IBOutlet weak var loopBtn: NSButton!
   @IBOutlet weak var shuffleBtn: NSButton!
   @IBOutlet weak var totalLengthLabel: NSTextField!
+  @IBOutlet weak var textScaleBtn: NSButton!
   @IBOutlet var subPopover: NSPopover!
   @IBOutlet var addFileMenu: NSMenu!
   @IBOutlet weak var addBtn: NSButton!
@@ -85,7 +116,7 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
     }
     playlistTableView.menu?.delegate = self
 
-    [deleteBtn, loopBtn, shuffleBtn].forEach {
+    [deleteBtn, loopBtn, shuffleBtn, textScaleBtn].forEach {
       $0?.image?.isTemplate = true
       $0?.alternateImage?.isTemplate = true
     }
@@ -131,6 +162,11 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
       popoverView.addTrackingArea(NSTrackingArea(rect: popoverView.bounds,
                                                  options: [.activeAlways, .inVisibleRect, .mouseEnteredAndExited, .mouseMoved],
                                                  owner: mainWindow, userInfo: ["obj": 0]))
+    }
+
+    // add user default observers
+    observedPrefKeys.forEach { key in
+      UserDefaults.standard.addObserver(self, forKeyPath: key.rawValue, options: .new, context: nil)
     }
   }
 
@@ -421,6 +457,10 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
   }
 
 
+  @IBAction func textScaleBtnAction(_ sender: AnyObject) {
+    cycleTextScale()
+  }
+
   @objc func performDoubleAction(sender: AnyObject) {
     guard let tv = sender as? NSTableView, tv.numberOfSelectedRows > 0 else { return }
     if tv == playlistTableView {
@@ -471,16 +511,26 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
     let info = player.info
     let v = tableView.makeView(withIdentifier: identifier, owner: self) as! NSTableCellView
 
+    // set NSTableCellView font size
+    let textField = v.textField!
+    textField.font = NSFont(descriptor: textField.font!.fontDescriptor, size: NSFont.systemFontSize(for: .regular) * getTextScaleFormatted())
+    textField.setFrameOrigin(NSZeroPoint)
+
     // playlist
     if tableView == playlistTableView {
       guard row < info.playlist.count else { return nil }
       let item = info.playlist[row]
 
       if identifier == .isChosen {
-        v.textField?.stringValue = item.isPlaying ? Constants.String.play : ""
+        // playback indicator
+        textField.stringValue = item.isPlaying ? Constants.String.play : " "
+        textField.sizeToFit()
+        if (item.isPlaying) {
+          tableColumn!.width = max(tableColumn!.minWidth, textField.intrinsicContentSize.width)
+        }
       } else if identifier == .trackName {
+        // track name
         let cellView = v as! PlaylistTrackCellView
-        // file name
         let filename = item.filenameForDisplay
         let displayStr: String = NSString(string: filename).deletingPathExtension
 
@@ -505,7 +555,7 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
           cellView.setTitle(filename)
         }
         // playback progress and duration
-        cellView.durationLabel.font = NSFont.monospacedDigitSystemFont(ofSize: NSFont.smallSystemFontSize, weight: .regular)
+        cellView.durationLabel.font = NSFont.monospacedDigitSystemFont(ofSize: NSFont.smallSystemFontSize * getTextScaleFormatted(), weight: .regular)
         cellView.durationLabel.stringValue = ""
         player.playlistQueue.async {
           if let (artist, title) = getCachedMetadata() {
@@ -549,9 +599,16 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
         // not sure why this line exists, but let's keep it for now
         cellView.subBtn.image?.isTemplate = true
       }
+
+      tableView.sizeLastColumnToFit()
+
+      // DEBUG
+      // let cellInfo = "X:\t\(playlistTableView.column(withIdentifier: tableColumn!.identifier)) | Y:\t\(row.description) | \(textField.font!.pointSize.description)pt | W: \(String(format: "%7.2f", tableColumn!.width)) | textField: \(textField.intrinsicContentSize.width)"
+      // Logger.log("\(cellInfo) | \"\(textField.stringValue)\"", level: .debug)
+
       return v
     }
-    // chapter
+    // chapter\t
     else if tableView == chapterTableView {
       let chapters = info.chapters
       let chapter = chapters[row]
@@ -568,6 +625,14 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
         let cellView = v as! ChapterTableCellView
         cellView.setTitle(chapter.title.isEmpty ? "Chapter \(row)" : chapter.title)
         cellView.durationTextField.stringValue = "\(chapter.time.stringRepresentation) → \(nextChapterTime.stringRepresentation)"
+        // set ChapterTableCellView font size
+        cellView.durationTextField.font = NSFont(descriptor: cellView.durationTextField.font!.fontDescriptor, size: NSFont.systemFontSize(for: .mini) * getTextScaleFormatted())
+        // update ChapterTableCellView text fields position
+        cellView.durationTextField.sizeToFit()
+        cellView.durationTextField.setFrameOrigin(NSZeroPoint)
+        cellView.textField?.sizeToFit()
+        cellView.textField?.setFrameOrigin(NSPoint(x:0, y: cellView.bounds.size.height - (cellView.textField?.bounds.size.height)!))
+
         return cellView
       } else {
         return nil
@@ -576,6 +641,28 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
     else {
       return nil
     }
+  }
+
+  func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
+    return tableView.rowHeight * getTextScaleFormatted();
+  }
+
+  // MARK: - Text Scale
+
+  // cycle text scale
+  func cycleTextScale() {
+    if Preference.integer(for: .playlistTextScale) <= TextScaleMax {
+      // increment text scale by step
+      Preference.set(Preference.integer(for: .playlistTextScale) + TextScaleStep, for: .playlistTextScale)
+    } else {
+      // set text scale to default
+      Preference.set(Preference.defaultPreference[.playlistTextScale] as! Int, for: .playlistTextScale)
+    }
+  }
+
+  // get current text scale
+  func getTextScaleFormatted() -> CGFloat {
+    return CGFloat(Preference.integer(for: .playlistTextScale)) / 100.0
   }
 
   // MARK: - Context menu

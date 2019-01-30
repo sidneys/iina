@@ -322,7 +322,7 @@ class PlayerCore: NSObject {
 
   // unload main window video view
   func uninitVideo() {
-    guard mainWindow.loaded else { return }
+    guard mainWindow.isWindowLoaded else { return }
     mainWindow.videoView.stopDisplayLink()
     mainWindow.videoView.uninit()
   }
@@ -351,7 +351,7 @@ class PlayerCore: NSObject {
     }
     switchedBackFromMiniPlayerManually = false
 
-    let needRestoreLayout = !miniPlayer.loaded
+    let needRestoreLayout = !miniPlayer.isWindowLoaded
     miniPlayer.showWindow(self)
 
     miniPlayer.updateTitle()
@@ -1211,7 +1211,7 @@ class PlayerCore: NSObject {
    These options currently include fullscreen and ontop.
    */
   private func checkUnsyncedWindowOptions() {
-    guard mainWindow.loaded else { return }
+    guard mainWindow.isWindowLoaded else { return }
 
     let fs = mpv.getFlag(MPVOption.Window.fullscreen)
     if fs != mainWindow.fsState.isFullscreen {
@@ -1276,8 +1276,10 @@ class PlayerCore: NSObject {
 
   func syncUI(_ option: SyncUIOption) {
     // if window not loaded, ignore
-    guard mainWindow.loaded else { return }
-    Logger.log("Syncing UI \(option)", level: .verbose, subsystem: subsystem)
+    guard mainWindow.isWindowLoaded else { return }
+    if option != .time, option != .timeAndCache {
+      Logger.log("Syncing UI \(option)", level: .verbose, subsystem: subsystem)
+    }
 
     switch option {
 

@@ -503,6 +503,49 @@
                         <binding destination="IBP-Mz-Maa" name="value" keyPath="values.playlistShowMetadataInMusicMode" id="nxW-hX-9co"/>
                     </connections>
                 </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xxx-cU-0OC">
+                    <rect key="frame" x="118" y="10" width="70" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Text scale:" id="xxx-Y3-bOR">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WXg-Hd-Xdz" userLabel="Text scale Slider">
+                    <rect key="frame" x="192" y="8" width="111" height="15"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="111" id="Qjp-EM-ZRI"/>
+                    </constraints>
+                    <sliderCell key="cell" controlSize="mini" alignment="left" minValue="100" maxValue="300" doubleValue="100" tickMarkPosition="below" numberOfTickMarks="9" allowsTickMarkValuesOnly="YES" sliderType="linear" id="ffn-kK-WaE"/>
+                    <connections>
+                        <binding destination="IBP-Mz-Maa" name="value" keyPath="values.playlistTextScale" id="Q7e-iP-Fhk"/>
+                    </connections>
+                </slider>
+                <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xxx-lc-kLe" userLabel="Text scale Label">
+                    <rect key="frame" x="309" y="5" width="40" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="TNa-QS-mSG"/>
+                    </constraints>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" alignment="left" title="100" id="xxx-x7-Aqz">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <binding destination="IBP-Mz-Maa" name="value" keyPath="values.playlistTextScale" id="Pk5-9a-Gkw"/>
+                    </connections>
+                </textField>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="E84-3a-4Az" userLabel="Text scale %">
+                    <rect key="frame" x="333" y="10" width="44" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="3HD-K8-clK"/>
+                    </constraints>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" alignment="left" title="%" id="lzm-1A-Jcd">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
             <constraints>
                 <constraint firstItem="YDQ-cu-7vE" firstAttribute="leading" secondItem="UHf-eK-ba5" secondAttribute="leading" id="0Kh-Ym-ocl"/>
@@ -511,14 +554,23 @@
                 <constraint firstItem="6gO-wx-MWj" firstAttribute="leading" secondItem="y7O-rd-dnT" secondAttribute="leading" id="HHh-Ci-kWH"/>
                 <constraint firstItem="ey2-TT-Tl9" firstAttribute="top" secondItem="YDQ-cu-7vE" secondAttribute="bottom" constant="8" id="MQj-y6-fEt"/>
                 <constraint firstAttribute="bottom" secondItem="ey2-TT-Tl9" secondAttribute="bottom" constant="8" id="OH2-dz-anH"/>
+                <constraint firstItem="xxx-cU-0OC" firstAttribute="top" secondItem="UHf-eK-ba5" secondAttribute="bottom" constant="9" id="26K-bS-rAp"/>
+                <constraint firstItem="E84-3a-4Az" firstAttribute="leading" secondItem="xxx-cU-0OC" secondAttribute="trailing" constant="149" id="HNU-87-Hx5"/>
+                <constraint firstItem="WXg-Hd-Xdz" firstAttribute="leading" secondItem="xxx-cU-0OC" secondAttribute="trailing" constant="6" id="J0y-7o-nU5"/>
+                <constraint firstItem="xxx-lc-kLe" firstAttribute="leading" secondItem="xxx-cU-0OC" secondAttribute="trailing" constant="125" id="JMB-gF-kcT"/>
+                <constraint firstItem="WXg-Hd-Xdz" firstAttribute="centerY" secondItem="xxx-cU-0OC" secondAttribute="centerY" constant="3" id="P4N-EP-mfm"/>
                 <constraint firstItem="OVz-Nv-1WW" firstAttribute="leading" secondItem="xmd-ef-R8e" secondAttribute="leading" constant="18" id="PV1-DS-RhV"/>
                 <constraint firstItem="UHf-eK-ba5" firstAttribute="leading" secondItem="xmd-ef-R8e" secondAttribute="leading" id="QpE-IK-2rs"/>
                 <constraint firstItem="6gO-wx-MWj" firstAttribute="top" secondItem="y7O-rd-dnT" secondAttribute="top" constant="8" id="R9Q-BW-yNL"/>
+                <constraint firstItem="WXg-Hd-Xdz" firstAttribute="leading" secondItem="y7O-rd-dnT" secondAttribute="leading" constant="192" id="TjA-3Y-XOM"/>
+                <constraint firstItem="xxx-cU-0OC" firstAttribute="leading" secondItem="UHf-eK-ba5" secondAttribute="leading" id="UK4-A2-Y7j"/>
+                <constraint firstItem="E84-3a-4Az" firstAttribute="firstBaseline" secondItem="xxx-cU-0OC" secondAttribute="firstBaseline" id="Vle-8S-NwS"/>
                 <constraint firstItem="xmd-ef-R8e" firstAttribute="leading" secondItem="y7O-rd-dnT" secondAttribute="leading" constant="120" id="WmZ-xJ-nJr"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="YDQ-cu-7vE" secondAttribute="trailing" id="a4R-ug-WId"/>
                 <constraint firstItem="ey2-TT-Tl9" firstAttribute="leading" secondItem="YDQ-cu-7vE" secondAttribute="leading" constant="20" id="aVN-BA-zZz"/>
                 <constraint firstItem="YDQ-cu-7vE" firstAttribute="top" secondItem="UHf-eK-ba5" secondAttribute="bottom" constant="8" id="fru-O3-rhE"/>
                 <constraint firstItem="6gO-wx-MWj" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="y7O-rd-dnT" secondAttribute="leading" constant="120" id="hMc-8k-u0x"/>
+                <constraint firstItem="xxx-lc-kLe" firstAttribute="firstBaseline" secondItem="xxx-cU-0OC" secondAttribute="firstBaseline" id="arz-3z-8aO"/>
                 <constraint firstItem="OVz-Nv-1WW" firstAttribute="top" secondItem="xmd-ef-R8e" secondAttribute="bottom" constant="4" id="knP-0X-jJU"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xmd-ef-R8e" secondAttribute="trailing" id="o3a-bC-bx3"/>
                 <constraint firstItem="6gO-wx-MWj" firstAttribute="top" secondItem="xmd-ef-R8e" secondAttribute="top" id="q99-S9-zIq"/>

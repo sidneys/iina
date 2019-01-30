@@ -23,6 +23,7 @@
                 <outlet property="tabHeightConstraint" destination="aPN-VC-eZR" id="Vuo-Yl-46m"/>
                 <outlet property="tabView" destination="Yym-Zw-Hd8" id="xXL-Ne-hHh"/>
                 <outlet property="totalLengthLabel" destination="icQ-T6-fV9" id="D9Z-Th-JVy"/>
+                <outlet property="textScaleBtn" destination="AVa-fg-XaK" id="jmA-qv-KtM"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
         </customObject>
@@ -54,7 +55,7 @@
                                                     <tableViewGridLines key="gridStyleMask" horizontal="YES"/>
                                                     <color key="gridColor" red="1" green="1" blue="1" alpha="0.10000000000000001" colorSpace="calibratedRGB"/>
                                                     <tableColumns>
-                                                        <tableColumn identifier="IsChosen" editable="NO" width="16" minWidth="16" maxWidth="16" id="no0-xJ-G1t">
+                                                        <tableColumn identifier="IsChosen" editable="NO" width="16" minWidth="16" maxWidth="1000" id="no0-xJ-G1t">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="justified">
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -71,7 +72,7 @@
                                                                     <subviews>
                                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="eZG-xB-blk">
                                                                             <rect key="frame" x="0.0" y="1" width="23" height="16"/>
-                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="▶︎" id="4yj-cg-fli">
+                                                                            <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="▶︎" scrollable="YES" drawsBackground="YES" usesSingleLineMode="YES" id="4yj-cg-fli">
                                                                                 <font key="font" metaFont="system"/>
                                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -271,6 +272,19 @@
                                                     <action selector="shuffleBtnAction:" target="-2" id="ZiC-jw-zzz"/>
                                                 </connections>
                                             </button>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AVa-fg-XaK" userLabel="TextScale Btn">
+                                                <rect key="frame" x="50" y="0.0" width="24" height="24"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="24" id="rjy-sV-Qoq"/>
+                                                </constraints>
+                                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="textsize" imagePosition="overlaps" alignment="center" alternateImage="textsize-dark" lineBreakMode="truncatingTail" imageScaling="proportionallyDown" inset="2" id="gwz-hg-K1c">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="textScaleBtnAction:" target="-2" id="4vR-72-o6r"/>
+                                                </connections>
+                                            </button>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="icQ-T6-fV9">
                                                 <rect key="frame" x="102" y="5" width="33" height="14"/>
                                                 <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="Label" id="6J7-iM-V5h">
@@ -303,7 +317,10 @@
                                             <constraint firstAttribute="bottom" secondItem="xKm-J1-NZs" secondAttribute="bottom" id="L7x-2J-yyG"/>
                                             <constraint firstItem="7my-AM-8Ts" firstAttribute="top" secondItem="X2W-MY-vYB" secondAttribute="top" id="LE8-YD-ghx"/>
                                             <constraint firstItem="icQ-T6-fV9" firstAttribute="centerX" secondItem="X2W-MY-vYB" secondAttribute="centerX" id="LSa-Bd-2wQ"/>
+                                            <constraint firstAttribute="bottom" secondItem="AVa-fg-XaK" secondAttribute="bottom" id="Q4p-PK-uSL"/>
+                                            <constraint firstItem="7my-AM-8Ts" firstAttribute="leading" secondItem="W9C-Z7-hiI" secondAttribute="trailing" id="TqF-O6-xHW"/>
                                             <constraint firstItem="IHI-5g-OMg" firstAttribute="top" secondItem="X2W-MY-vYB" secondAttribute="top" id="VVG-ZO-opa"/>
+                                            <constraint firstItem="AVa-fg-XaK" firstAttribute="leading" secondItem="xhU-qn-3aa" secondAttribute="trailing" id="VXN-gR-hI4"/>
                                             <constraint firstItem="xhU-qn-3aa" firstAttribute="leading" secondItem="IHI-5g-OMg" secondAttribute="trailing" id="beQ-YD-Oxf"/>
                                             <constraint firstItem="xKm-J1-NZs" firstAttribute="leading" secondItem="W9C-Z7-hiI" secondAttribute="trailing" id="lwV-Uv-v1i"/>
                                             <constraint firstAttribute="bottom" secondItem="xhU-qn-3aa" secondAttribute="bottom" id="mPm-LR-ZkL"/>
@@ -311,6 +328,7 @@
                                             <constraint firstItem="xKm-J1-NZs" firstAttribute="top" secondItem="X2W-MY-vYB" secondAttribute="top" id="q0k-4V-oj8"/>
                                             <constraint firstItem="icQ-T6-fV9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="xhU-qn-3aa" secondAttribute="trailing" constant="4" id="qGM-Ip-dO0"/>
                                             <constraint firstItem="W9C-Z7-hiI" firstAttribute="top" secondItem="X2W-MY-vYB" secondAttribute="top" id="qUl-cf-d3q"/>
+                                            <constraint firstItem="AVa-fg-XaK" firstAttribute="top" secondItem="X2W-MY-vYB" secondAttribute="top" id="qmX-bm-39E"/>
                                             <constraint firstItem="IHI-5g-OMg" firstAttribute="leading" secondItem="X2W-MY-vYB" secondAttribute="leading" constant="2" id="shV-bB-ELD"/>
                                             <constraint firstAttribute="bottom" secondItem="IHI-5g-OMg" secondAttribute="bottom" id="uNy-QA-naW"/>
                                             <constraint firstAttribute="height" constant="24" id="vRf-T5-e5u"/>
@@ -630,5 +648,7 @@
         <image name="shuffle-dark" width="15" height="15"/>
         <image name="sub-track" width="14" height="14"/>
         <image name="trash" width="14" height="14"/>
+        <image name="textsize" width="29" height="29"/>
+        <image name="textsize-dark" width="29" height="29"/>
     </resources>
 </document>
