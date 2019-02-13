@@ -46,10 +46,11 @@ struct Logger {
 
   static let logDirectory: URL = {
     let formatter = DateFormatter()
-    formatter.dateFormat = "yyyy-MM-dd-HH-mm-ss"
+    formatter.dateFormat = "YYYY-MM-dd"
     let timeString  = formatter.string(from: Date())
-    let token = Utility.ShortCodeGenerator.getCode(length: 6)
-    let sessionDirName = "\(timeString)_\(token)"
+    // let token = Utility.ShortCodeGenerator.getCode(length: 6)
+    // let sessionDirName = "\(timeString)_\(token)"
+    let sessionDirName = "\(timeString)"
     let sessionDir = Utility.logDirURL.appendingPathComponent(sessionDirName, isDirectory: true)
     Utility.createDirIfNotExist(url: sessionDir)
     return sessionDir
