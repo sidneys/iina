@@ -148,7 +148,9 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
   func reloadData(playlist: Bool, chapters: Bool) {
     if playlist {
       player.getPlaylist()
-      playlistTableView.reloadData()
+      ArtworkFetcher.fetchArtwork(playerCore: self.player) {
+        self.playlistTableView.reloadData()
+      }
     }
     if chapters {
       player.getChapters()
@@ -480,6 +482,8 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
         v.textField?.stringValue = item.isPlaying ? Constants.String.play : ""
       } else if identifier == .trackName {
         let cellView = v as! PlaylistTrackCellView
+        // artwork
+        cellView.imageView?.image = item.artworkImage
         // file name
         let filename = item.filenameForDisplay
         let displayStr: String = NSString(string: filename).deletingPathExtension

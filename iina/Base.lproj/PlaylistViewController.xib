@@ -54,7 +54,7 @@
                                                     <tableViewGridLines key="gridStyleMask" horizontal="YES"/>
                                                     <color key="gridColor" red="1" green="1" blue="1" alpha="0.10000000000000001" colorSpace="calibratedRGB"/>
                                                     <tableColumns>
-                                                        <tableColumn identifier="IsChosen" editable="NO" width="16" minWidth="16" maxWidth="16" id="no0-xJ-G1t">
+                                                        <tableColumn identifier="IsChosen" editable="NO" width="16" minWidth="16" maxWidth="8192" id="no0-xJ-G1t">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="justified">
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -92,7 +92,7 @@
                                                                 </tableCellView>
                                                             </prototypeCellViews>
                                                         </tableColumn>
-                                                        <tableColumn identifier="TrackName" editable="NO" width="205" minWidth="100" maxWidth="1000" id="csQ-Z4-hxP">
+                                                        <tableColumn identifier="TrackName" editable="NO" width="205" minWidth="100" maxWidth="8192" id="csQ-Z4-hxP">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -108,8 +108,15 @@
                                                                     <rect key="frame" x="25" y="1" width="209" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
+                                                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="FvB-u4-Wta" userLabel="Artwork">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="17" height="17"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" secondItem="FvB-u4-Wta" secondAttribute="height" id="1uc-cY-gbM"/>
+                                                                            </constraints>
+                                                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" id="MOb-8B-hU1"/>
+                                                                        </imageView>
                                                                         <button toolTip="Folded common prefix" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="U4W-Xv-hkh" customClass="PlaylistPrefixButton" customModule="IINA" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="15" height="17"/>
+                                                                            <rect key="frame" x="17" y="0.0" width="15" height="17"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="17" id="vUd-CP-5bg"/>
                                                                             </constraints>
@@ -122,7 +129,7 @@
                                                                             </connections>
                                                                         </button>
                                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="mzW-2W-iPg">
-                                                                            <rect key="frame" x="13" y="1" width="96" height="16"/>
+                                                                            <rect key="frame" x="30" y="0.0" width="96" height="17"/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" title="Table View Cell" id="M5s-Bm-l3O">
                                                                                 <font key="font" metaFont="system"/>
                                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -180,15 +187,21 @@
                                                                         <constraint firstItem="rsK-ba-ojP" firstAttribute="centerY" secondItem="yTp-yO-UE2" secondAttribute="centerY" id="aED-tB-AFV"/>
                                                                         <constraint firstItem="U4W-Xv-hkh" firstAttribute="centerY" secondItem="yTp-yO-UE2" secondAttribute="centerY" id="g5U-ZA-Kco"/>
                                                                         <constraint firstItem="MbV-7g-8Gm" firstAttribute="leading" secondItem="rsK-ba-ojP" secondAttribute="trailing" constant="4" id="hoP-Vl-aD1"/>
+                                                                        <constraint firstItem="FvB-u4-Wta" firstAttribute="leading" secondItem="yTp-yO-UE2" secondAttribute="leading" id="MeY-uN-atx"/>
+                                                                        <constraint firstItem="FvB-u4-Wta" firstAttribute="centerY" secondItem="yTp-yO-UE2" secondAttribute="centerY" id="PsC-tW-E3r"/>
+                                                                        <constraint firstItem="MbV-7g-8Gm" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="mzW-2W-iPg" secondAttribute="trailing" constant="4" id="Qgz-CT-EnQ"/>
+                                                                        <constraint firstItem="FvB-u4-Wta" firstAttribute="top" secondItem="yTp-yO-UE2" secondAttribute="top" id="XjT-ny-3Rn"/>
+                                                                        <constraint firstAttribute="bottom" secondItem="FvB-u4-Wta" secondAttribute="bottom" id="mMv-8O-QOG"/>
                                                                         <constraint firstAttribute="trailing" secondItem="K4f-mB-ja8" secondAttribute="trailing" constant="4" id="mSL-zL-ggu"/>
                                                                         <constraint firstItem="yEn-uv-K8Z" firstAttribute="centerY" secondItem="yTp-yO-UE2" secondAttribute="centerY" id="oc3-Vu-aJb"/>
-                                                                        <constraint firstItem="U4W-Xv-hkh" firstAttribute="leading" secondItem="yTp-yO-UE2" secondAttribute="leading" id="pTq-Bj-ICm"/>
                                                                         <constraint firstItem="mzW-2W-iPg" firstAttribute="centerY" secondItem="yTp-yO-UE2" secondAttribute="centerY" id="qW6-QF-Yl2"/>
+                                                                        <constraint firstItem="U4W-Xv-hkh" firstAttribute="leading" secondItem="FvB-u4-Wta" secondAttribute="trailing" id="xTZ-7j-xf1"/>
                                                                     </constraints>
                                                                     <connections>
                                                                         <outlet property="durationLabel" destination="yEn-uv-K8Z" id="TSc-nq-rtt"/>
                                                                         <outlet property="infoLabel" destination="rsK-ba-ojP" id="hef-W2-9Kv"/>
                                                                         <outlet property="infoLabelTrailingConstraint" destination="hoP-Vl-aD1" id="pb0-Ob-rEt"/>
+                                                                        <outlet property="imageView" destination="FvB-u4-Wta" id="urf-XI-r5x"/>
                                                                         <outlet property="playbackProgressView" destination="K4f-mB-ja8" id="z9u-40-9K7"/>
                                                                         <outlet property="prefixBtn" destination="U4W-Xv-hkh" id="Uyd-uy-W5S"/>
                                                                         <outlet property="subBtn" destination="MbV-7g-8Gm" id="5Ob-Et-XBK"/>

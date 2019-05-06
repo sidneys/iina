@@ -15,6 +15,7 @@ class Regex {
   static let url = Regex("^(([^:\\/?#]+):)(\\/\\/([^/?#]*))?([^?#]*)(\\?([^#]*))?(#(.*))?")
   static let filePath = Regex("^(/[^/]+)+$")
   static let geometry = Regex("^((\\d+%?)?(x(\\d+%?))?)?((\\+|\\-)(\\d+%?)(\\+|\\-)(\\d+%?))?$")
+  static let youtube = Regex("^(https?://)?(www.)?(youtube.com|youtu.be)(.*)")
 
   var regex: NSRegularExpression?
 
