@@ -16,6 +16,8 @@ fileprivate let MenuItemTagCopy = 602
 fileprivate let MenuItemTagPaste = 603
 fileprivate let MenuItemTagDelete = 604
 
+fileprivate let ArtworkSize = 64
+
 class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate, NSMenuDelegate, SidebarViewController, NSMenuItemValidation {
 
   override var nibName: NSNib.Name {
@@ -148,9 +150,7 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
   func reloadData(playlist: Bool, chapters: Bool) {
     if playlist {
       player.getPlaylist()
-      ArtworkFetcher.fetchArtwork(playerCore: self.player) {
-        self.playlistTableView.reloadData()
-      }
+      self.playlistTableView.reloadData()
     }
     if chapters {
       player.getChapters()
@@ -473,6 +473,7 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
     let info = player.info
     let v = tableView.makeView(withIdentifier: identifier, owner: self) as! NSTableCellView
 
+
     // playlist
     if tableView == playlistTableView {
       guard row < info.playlist.count else { return nil }
@@ -482,8 +483,20 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
         v.textField?.stringValue = item.isPlaying ? Constants.String.play : ""
       } else if identifier == .trackName {
         let cellView = v as! PlaylistTrackCellView
-        // artwork
-        cellView.imageView?.image = item.artworkImage
+        // fetch artwork image
+        item.fetchArtwork{ (image) -> () in
+          DispatchQueue.main.async {
+            // calculate required artwork image dimensions
+            let currentSize = NSSize(width: image.size.width, height: image.size.height)
+            let targetSize = currentSize.satisfyMinSizeWithSameAspectRatio(NSSize(width: image.size.width, height: CGFloat(ArtworkSize)))
+            // resize artwork image
+            if let imageResized = image.resizeTo(to: targetSize) {
+              // set artwork image for item
+              cellView.imageView?.transitionTo(image: imageResized, duration: 0.1)
+            }
+          }
+        }
+        
         // file name
         let filename = item.filenameForDisplay
         let displayStr: String = NSString(string: filename).deletingPathExtension

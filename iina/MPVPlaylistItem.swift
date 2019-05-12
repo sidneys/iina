@@ -7,8 +7,10 @@
 //
 
 import Cocoa
+import AVFoundation
 
-fileprivate let genericFileIcon = NSWorkspace.shared.icon(forFileType: NSFileTypeForHFSTypeCode(OSType(kGenericDocumentIcon)))
+fileprivate let subsystem = Logger.Subsystem(rawValue: "MPVPlaylistItem")
+fileprivate let genericArtwork = #imageLiteral(resourceName: "generic-artwork") as NSImage
 
 class MPVPlaylistItem: NSObject {
 
@@ -36,19 +38,82 @@ class MPVPlaylistItem: NSObject {
     self.title = title
     self.isNetworkResource = Regex.url.matches(filename)
     self.isYoutubeResource = Regex.youtube.matches(filename)
+  }
 
-    // initialize cover art with generic artwork image (QuickLook)
-    self.artworkImage = #imageLiteral(resourceName: "generic-artwork")
+  /**
+   Fetches Cover Artwork metadata images for playlist item. Loads images for local files via AVFoundation API.
+   Downloads YouTube thumbnails via the public API. Falls back to generic icon.
 
-    if (self.isNetworkResource != true) {
-        // lookup document icon for file on disk
-        let fileIcon = NSWorkspace.shared.icon(forFile: filename)
+   - parameters:
+     - callback: Completion handler with `NSImage` object providing the fetched data.
+   */
+  func fetchArtwork(callback: @escaping (NSImage) -> Void) {
+    // Check if Artwork already set
+    guard (self.artworkImage == nil) else {
+      // Callback
+      callback(self.artworkImage!)
 
-        // ensure document icon is not default / generic
-        if (fileIcon.tiffRepresentation?.md5 != genericFileIcon.tiffRepresentation?.md5) {
-            // replace generic artwork image with file type icon
-            self.artworkImage = fileIcon
-        }
+      return
     }
+
+    // Set Artwork Fallback
+    self.artworkImage = genericArtwork
+
+    /** Resource Type: Local Filesystem  */
+    guard (self.isNetworkResource) else {
+      let asset = AVAsset(url: URL.init(fileURLWithPath: self.filename))
+
+      // Loading Metadata (Async)
+      asset.loadValuesAsynchronously(forKeys: ["commonMetadata"], completionHandler: {
+        var error: NSError? = nil
+        let status = asset.statusOfValue(forKey: "commonMetadata", error: &error)
+
+        // Result (Async)
+        switch status {
+          case .loaded:
+            Logger.log("Loading Successful", level: .debug, subsystem: subsystem)
+            let metadataItemList = AVMetadataItem.metadataItems(from: asset.commonMetadata, withKey: AVMetadataKey.commonKeyArtwork, keySpace: AVMetadataKeySpace.common)
+
+            // Query for iTunes, ID3 Artworks
+            if let metadataItem = metadataItemList.first, metadataItem.keySpace == .id3 || metadataItem.keySpace == .iTunes {
+              if let imageData = metadataItem.dataValue, let image = NSImage(data: imageData) {
+                // Set Artwork (from Metadata)
+                self.artworkImage = image
+              }
+
+              Logger.log("Metadata: \(metadataItem.description)", level: .verbose, subsystem: subsystem)
+            }
+          case .failed:
+            Logger.log("Loading Failed (\([error?.localizedDescription]))", level: .error, subsystem: subsystem)
+          case .cancelled:
+            Logger.log("Loading Cancelled", level: .debug, subsystem: subsystem)
+          default:
+            Logger.log("Loading Status: \(status.rawValue)", level: .debug, subsystem: subsystem)
+        }
+
+        // Callback
+        callback(self.artworkImage!)
+      })
+
+      return
+    }
+
+    /** Resource Type: YouTube URL  */
+    guard (!self.isYoutubeResource) else {
+      // Query youtube.com for default Thumbnails
+      if let url = URL(string: self.filename), let id = url.pathComponents.last {
+        let image = NSImage(byReferencing: URL(string: "https://img.youtube.com/vi/\(id)/0.jpg")!)
+        // Set Artwork (from Thumbnail)
+        self.artworkImage = image
+      }
+
+      // Callback
+      callback(self.artworkImage!)
+
+      return
+    }
+
+    /** Resource Type: Other */
+    callback(self.artworkImage!)
   }
 }
