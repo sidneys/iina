@@ -483,20 +483,28 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
         v.textField?.stringValue = item.isPlaying ? Constants.String.play : ""
       } else if identifier == .trackName {
         let cellView = v as! PlaylistTrackCellView
+        // artwork
+        let imageView = cellView.imageView!
+        // initialize artwork imageView
+        imageView.wantsLayer = true
+        imageView.layer?.backgroundColor = NSColor(white: 0, alpha: 0.1).cgColor
+        imageView.layer?.drawsAsynchronously = true
+        imageView.layer?.shouldRasterize = false
         // fetch artwork image
         item.fetchArtwork{ (image) -> () in
-          DispatchQueue.main.async {
-            // calculate required artwork image dimensions
-            let currentSize = NSSize(width: image.size.width, height: image.size.height)
-            let targetSize = currentSize.satisfyMinSizeWithSameAspectRatio(NSSize(width: image.size.width, height: CGFloat(ArtworkSize)))
-            // resize artwork image
-            if let imageResized = image.resizeTo(to: targetSize) {
-              // set artwork image for item
-              cellView.imageView?.transitionTo(image: imageResized, duration: 0.1)
+          // calculate artwork size
+          let currentSize = NSSize(width: image.size.width, height: image.size.height)
+          let targetSize = currentSize.grow(toSize: NSSize(width: CGFloat(ArtworkSize), height: CGFloat(ArtworkSize)))
+          // resize artwork image
+          if let imageResized = image.resizeTo(to: targetSize) {
+            // set artwork as imageView
+            DispatchQueue.main.async {
+              // imageView.transitionTo(image: imageResized, duration: 0.5)
+              imageView.image = imageResized
             }
           }
         }
-        
+
         // file name
         let filename = item.filenameForDisplay
         let displayStr: String = NSString(string: filename).deletingPathExtension
