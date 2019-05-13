@@ -108,15 +108,15 @@
                                                                     <rect key="frame" x="25" y="1" width="209" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
-                                                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="FvB-u4-Wta" userLabel="Artwork">
+                                                                        <imageView canDrawConcurrently="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="FvB-u4-Wta" userLabel="Artwork">
                                                                             <rect key="frame" x="0.0" y="0.0" width="17" height="17"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" secondItem="FvB-u4-Wta" secondAttribute="height" id="1uc-cY-gbM"/>
                                                                             </constraints>
-                                                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" id="MOb-8B-hU1"/>
+                                                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" id="MOb-8B-hU1"/>
                                                                         </imageView>
                                                                         <button toolTip="Folded common prefix" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="U4W-Xv-hkh" customClass="PlaylistPrefixButton" customModule="IINA" customModuleProvider="target">
-                                                                            <rect key="frame" x="17" y="0.0" width="15" height="17"/>
+                                                                            <rect key="frame" x="21" y="0.0" width="15" height="17"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="17" id="vUd-CP-5bg"/>
                                                                             </constraints>
@@ -129,7 +129,7 @@
                                                                             </connections>
                                                                         </button>
                                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="mzW-2W-iPg">
-                                                                            <rect key="frame" x="30" y="0.0" width="96" height="17"/>
+                                                                            <rect key="frame" x="34" y="0.0" width="96" height="17"/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" title="Table View Cell" id="M5s-Bm-l3O">
                                                                                 <font key="font" metaFont="system"/>
                                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -195,7 +195,7 @@
                                                                         <constraint firstAttribute="trailing" secondItem="K4f-mB-ja8" secondAttribute="trailing" constant="4" id="mSL-zL-ggu"/>
                                                                         <constraint firstItem="yEn-uv-K8Z" firstAttribute="centerY" secondItem="yTp-yO-UE2" secondAttribute="centerY" id="oc3-Vu-aJb"/>
                                                                         <constraint firstItem="mzW-2W-iPg" firstAttribute="centerY" secondItem="yTp-yO-UE2" secondAttribute="centerY" id="qW6-QF-Yl2"/>
-                                                                        <constraint firstItem="U4W-Xv-hkh" firstAttribute="leading" secondItem="FvB-u4-Wta" secondAttribute="trailing" id="xTZ-7j-xf1"/>
+                                                                        <constraint firstItem="U4W-Xv-hkh" firstAttribute="leading" secondItem="FvB-u4-Wta" secondAttribute="trailing" constant="4" id="xTZ-7j-xf1"/>
                                                                     </constraints>
                                                                     <connections>
                                                                         <outlet property="durationLabel" destination="yEn-uv-K8Z" id="TSc-nq-rtt"/>
