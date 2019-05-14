@@ -107,7 +107,7 @@ class MPVPlaylistItem: NSObject {
       if let id = Regex.youtube.captures(in: filename)[at: 1] {
         Logger.log("YouTube Video Id: \(id)", level: .debug, subsystem: subsystem)
         // Query youtube.com for thumbnails
-        let image = NSImage(byReferencing: URL(string: "https://img.youtube.com/vi/\(id)/0.jpg")!)
+        let image = NSImage(byReferencing: URL(string: "https://img.youtube.com/vi/\(id)/maxresdefault.jpg")!)
         // Set Artwork (from Thumbnail)
         self.artworkImage = image
       }
