@@ -16,7 +16,7 @@ fileprivate let MenuItemTagCopy = 602
 fileprivate let MenuItemTagPaste = 603
 fileprivate let MenuItemTagDelete = 604
 
-fileprivate let ArtworkSize = 64
+fileprivate let ArtworkSize = 256
 
 class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate, NSMenuDelegate, SidebarViewController, NSMenuItemValidation {
 
@@ -494,7 +494,7 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
         item.fetchArtwork{ (image) -> () in
           // calculate artwork size
           let currentSize = NSSize(width: image.size.width, height: image.size.height)
-          let targetSize = currentSize.grow(toSize: NSSize(width: CGFloat(ArtworkSize), height: CGFloat(ArtworkSize)))
+          var targetSize = currentSize.crop(withAspect: Aspect(string: "1:1")!)
           // resize artwork image
           if let imageResized = image.resizeTo(to: targetSize) {
             // set artwork as imageView
