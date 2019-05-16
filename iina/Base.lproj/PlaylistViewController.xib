@@ -109,14 +109,14 @@
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <imageView canDrawConcurrently="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="FvB-u4-Wta" userLabel="Artwork">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="17" height="17"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="30" height="17"/>
                                                                             <constraints>
-                                                                                <constraint firstAttribute="width" secondItem="FvB-u4-Wta" secondAttribute="height" id="1uc-cY-gbM"/>
+                                                                                <constraint firstAttribute="width" secondItem="FvB-u4-Wta" secondAttribute="height" multiplier="16:9" id="fJq-Wi-B76"/>
                                                                             </constraints>
                                                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" id="MOb-8B-hU1"/>
                                                                         </imageView>
                                                                         <button toolTip="Folded common prefix" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="U4W-Xv-hkh" customClass="PlaylistPrefixButton" customModule="IINA" customModuleProvider="target">
-                                                                            <rect key="frame" x="21" y="0.0" width="15" height="17"/>
+                                                                            <rect key="frame" x="34" y="0.0" width="15" height="17"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="17" id="vUd-CP-5bg"/>
                                                                             </constraints>
@@ -129,7 +129,7 @@
                                                                             </connections>
                                                                         </button>
                                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="mzW-2W-iPg">
-                                                                            <rect key="frame" x="34" y="0.0" width="96" height="17"/>
+                                                                            <rect key="frame" x="47" y="0.0" width="96" height="17"/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" title="Table View Cell" id="M5s-Bm-l3O">
                                                                                 <font key="font" metaFont="system"/>
                                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>

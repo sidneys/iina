@@ -487,20 +487,21 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
         let imageView = cellView.imageView!
         // initialize artwork imageView
         imageView.wantsLayer = true
+        imageView.layer = CALayer()
         imageView.layer?.backgroundColor = NSColor(white: 0, alpha: 0.1).cgColor
         imageView.layer?.drawsAsynchronously = true
-        imageView.layer?.shouldRasterize = false
+        imageView.layer?.contents = imageView.image
         // fetch artwork image
         item.fetchArtwork{ (image) -> () in
           // calculate artwork size
           let currentSize = NSSize(width: image.size.width, height: image.size.height)
           var targetSize = currentSize.crop(withAspect: Aspect(string: "1:1")!)
           // resize artwork image
-          if let imageResized = image.resizeTo(to: targetSize) {
+          if let imageResized = image.resizeAspectFill(toSize: NSSize(width: ArtworkSize, height: ArtworkSize)) {
             // set artwork as imageView
             DispatchQueue.main.async {
-              // imageView.transitionTo(image: imageResized, duration: 0.5)
               imageView.image = imageResized
+              // imageView.needsDisplay = true
             }
           }
         }
