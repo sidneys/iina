@@ -561,6 +561,9 @@ class MainWindowController: PlayerWindowController {
     bottomView.isHidden = true
     pipOverlayView.isHidden = true
 
+    // set opacity
+    setOpacity(Preference.integer(for: .windowOpacity))
+
     // add user default observers
     observedPrefKeys.append(contentsOf: localObservedPrefKeys)
     observedPrefKeys.forEach { key in
