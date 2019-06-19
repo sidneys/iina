@@ -361,7 +361,7 @@ class MainWindowController: PlayerWindowController {
       }
     case PK.windowOpacity.rawValue:
       if let newValue = change[.newKey] as? Int {
-        setWindowOpacity(newValue)
+        setOpacity(newValue)
       }
     case PK.controlBarToolbarButtons.rawValue:
       if let newValue = change[.newKey] as? [Int] {
@@ -2238,17 +2238,17 @@ class MainWindowController: PlayerWindowController {
   }
 
   /**
-   Sets opacity of the player window.
+   Set the opacity/visibility of video view and window chrome.
 
    - Parameters:
    - opacity: Desired opacity (1=transparent, 100=opaque/default).
    */
-  func setWindowOpacity(_ opacity: Int) {
+  func setOpacity(_ opacity: Int) {
     guard let window = window else { return }
 
     let alpha = CGFloat(opacity)/100
 
-    // enable NSWindow translucency/transparency
+    // enable/disable transparent window
     if alpha < 1 {
       // translucent/transparent
       window.isOpaque = false
