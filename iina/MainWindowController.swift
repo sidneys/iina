@@ -299,6 +299,7 @@ class MainWindowController: PlayerWindowController {
   private lazy var arrowBtnFunction: Preference.ArrowButtonAction = Preference.enum(for: .arrowButtonAction)
   private lazy var pinchAction: Preference.PinchAction = Preference.enum(for: .pinchAction)
   lazy var displayTimeAndBatteryInFullScreen: Bool = Preference.bool(for: .displayTimeAndBatteryInFullScreen)
+  lazy var windowOpacity: Int = Preference.integer(for: .windowOpacity)
 
   private let localObservedPrefKeys: [Preference.Key] = [
     .oscPosition,
@@ -309,7 +310,8 @@ class MainWindowController: PlayerWindowController {
     .useLegacyFullScreen,
     .displayTimeAndBatteryInFullScreen,
     .controlBarToolbarButtons,
-    .alwaysShowOnTopIcon
+    .alwaysShowOnTopIcon,
+    .windowOpacity
   ]
 
   override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
@@ -356,6 +358,10 @@ class MainWindowController: PlayerWindowController {
         if !newValue {
           additionalInfoView.isHidden = true
         }
+      }
+    case PK.windowOpacity.rawValue:
+      if let newValue = change[.newKey] as? Int {
+        setWindowOpacity(newValue)
       }
     case PK.controlBarToolbarButtons.rawValue:
       if let newValue = change[.newKey] as? [Int] {
@@ -2229,6 +2235,34 @@ class MainWindowController: PlayerWindowController {
     resetCollectionBehavior()
     // don't know why they will be disabled
     standardWindowButtons.forEach { $0.isEnabled = true }
+  }
+
+  /**
+   Sets opacity of the player window.
+
+   - Parameters:
+   - opacity: Desired opacity (1=transparent, 100=opaque/default).
+   */
+  func setWindowOpacity(_ opacity: Int) {
+    guard let window = window else { return }
+
+    let alpha = CGFloat(opacity)/100
+
+    // enable NSWindow translucency/transparency
+    if alpha < 1 {
+      // translucent/transparent
+      window.isOpaque = false
+      window.hasShadow = false
+      window.backgroundColor = NSColor.clear
+    } else {
+      // opaque (default)
+      window.isOpaque = true
+      window.hasShadow = true
+      window.backgroundColor = NSColor.black
+    }
+
+    // Apply opacity to video view
+    videoView.alphaValue = alpha
   }
 
   // MARK: - Sync UI with playback

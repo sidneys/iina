@@ -143,6 +143,8 @@ struct Preference {
     static let pauseWhenPip = Key("pauseWhenPip")
     static let togglePipByMinimizingWindow = Key("togglePipByMinimizingWindow")
 
+    static let windowOpacity = Key("windowOpacity")
+
     // Codec
 
     static let videoThreads = Key("videoThreads")
@@ -713,7 +715,8 @@ struct Preference {
     .musicModeShowPlaylist: false,
     .musicModeShowAlbumArt: true,
     .displayTimeAndBatteryInFullScreen: false,
-    
+    .windowOpacity: 100,
+
     .windowBehaviorWhenPip: WindowBehaviorWhenPip.doNothing.rawValue,
     .pauseWhenPip: false,
     .togglePipByMinimizingWindow: false,
