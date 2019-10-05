@@ -149,10 +149,12 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
     if playlist {
       player.getPlaylist()
       playlistTableView.reloadData()
+      scrollToCurrentItem(playlistTableView, animate: true)
     }
     if chapters {
       player.getChapters()
       chapterTableView.reloadData()
+      scrollToCurrentItem(chapterTableView, animate: true)
     }
   }
 
@@ -203,13 +205,54 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
       }
     }
   }
-    
+
   func updateLoopBtnStatus() {
     guard isViewLoaded else { return }
     let loopStatus = player.mpv.getString(MPVOption.PlaybackControl.loopPlaylist)
     loopBtn.state = (loopStatus == "inf" || loopStatus == "force") ? .on : .off
   }
-    
+
+  // MARK: - Scroll to Current Item
+
+  private func getCurrentRow(_ tableView: NSTableView) -> Int? {
+    let column = tableView.column(withIdentifier: .isChosen)
+
+    for row in 0..<numberOfRows(in: tableView) {
+      let view = tableView.view(atColumn: column, row: row, makeIfNecessary: true) as! NSTableCellView
+      let text = view.textField?.stringValue
+
+      if (text == Constants.String.play) {
+        return row
+      }
+    }
+    return nil
+  }
+
+  private func scrollToCurrentItem(_ tableView: NSTableView, animate: Bool) {
+    guard let currentRow = getCurrentRow(tableView) else { return }
+
+    // Lookup Views
+    let rowRect = tableView.rect(ofRow: currentRow)
+    var scrollOrigin = rowRect.origin
+    let clipView = tableView.superview as? NSClipView
+
+    // Calculate Target Position
+    let tableHalfHeight = NSHeight(clipView!.frame)*0.5
+    let rowRectHalfHeight = NSHeight(rowRect)*0.5
+    scrollOrigin.y = (scrollOrigin.y - tableHalfHeight) + rowRectHalfHeight
+    let scrollView = clipView!.superview as? NSScrollView
+
+    // Show Scroll Bar
+    scrollView!.flashScrollers()
+
+    // Scroll to Target Position
+    if (animate) {
+      clipView!.animator().setBoundsOrigin(scrollOrigin)
+    } else {
+      clipView!.setBoundsOrigin(scrollOrigin)
+    }
+  }
+
   // MARK: - Tab switching
 
   /** Switch tab (call from other objects) */
