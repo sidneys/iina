@@ -149,14 +149,14 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
     if playlist {
       player.getPlaylist()
       playlistTableView.reloadData()
-      scrollToCurrentItem(playlistTableView, animate: true)
-    }
+        scrollToCurrentItem(playlistTableView, animate: true)
+      }
     if chapters {
       player.getChapters()
       chapterTableView.reloadData()
-      scrollToCurrentItem(chapterTableView, animate: true)
+        scrollToCurrentItem(chapterTableView, animate: true)
+      }
     }
-  }
 
   private func showTotalLength() {
     guard let playlistTotalLength = playlistTotalLength, playlistTotalLengthIsReady else { return }
@@ -212,16 +212,16 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
     loopBtn.state = (loopStatus == "inf" || loopStatus == "force") ? .on : .off
   }
 
-  // MARK: - Scroll to Current Item
+  // MARK: - Scroll to current playlist item / chapter
 
-  private func getCurrentRow(_ tableView: NSTableView) -> Int? {
+  private func getCurrentRowIndex(_ tableView: NSTableView) -> Int? {
+    // Select left table column
     let column = tableView.column(withIdentifier: .isChosen)
-
+    // Find row with text "▶︎" and return its index
     for row in 0..<numberOfRows(in: tableView) {
       let view = tableView.view(atColumn: column, row: row, makeIfNecessary: true) as! NSTableCellView
-      let text = view.textField?.stringValue
 
-      if (text == Constants.String.play) {
+      if (view.textField?.stringValue == Constants.String.play) {
         return row
       }
     }
@@ -229,26 +229,24 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
   }
 
   private func scrollToCurrentItem(_ tableView: NSTableView, animate: Bool) {
-    guard let currentRow = getCurrentRow(tableView) else { return }
-
-    // Lookup Views
-    let rowRect = tableView.rect(ofRow: currentRow)
+    guard let rowIndex = getCurrentRowIndex(tableView) else { return }
+    // Lookup NSTableView subviews
+    let rowRect = tableView.rect(ofRow: rowIndex)
     var scrollOrigin = rowRect.origin
     let clipView = tableView.superview as? NSClipView
-
-    // Calculate Target Position
-    let tableHalfHeight = NSHeight(clipView!.frame)*0.5
-    let rowRectHalfHeight = NSHeight(rowRect)*0.5
-    scrollOrigin.y = (scrollOrigin.y - tableHalfHeight) + rowRectHalfHeight
     let scrollView = clipView!.superview as? NSScrollView
-
-    // Show Scroll Bar
+    // Calculate scroll target offset position (vertically centered)
+    let tableHalfHeight = NSHeight(clipView!.frame) * 0.5
+    let rowRectHalfHeight = NSHeight(rowRect) * 0.5
+    scrollOrigin.y = (scrollOrigin.y - tableHalfHeight) + rowRectHalfHeight
+    // Show scroll bar
     scrollView!.flashScrollers()
-
-    // Scroll to Target Position
+    // Scroll to target offset
     if (animate) {
+      // Animated
       clipView!.animator().setBoundsOrigin(scrollOrigin)
     } else {
+      // Non-animated
       clipView!.setBoundsOrigin(scrollOrigin)
     }
   }
