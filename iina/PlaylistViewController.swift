@@ -150,14 +150,14 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
       player.getPlaylist()
       playlistTableView.reloadData()
       if Preference.bool(for: .playlistAutoScroll) {
-        scrollToCurrentItem(playlistTableView, animate: true)
+        scrollToPlayingItem(playlistTableView, animate: true)
       }
     }
     if chapters {
       player.getChapters()
       chapterTableView.reloadData()
       if Preference.bool(for: .chapterlistAutoScroll) {
-        scrollToCurrentItem(chapterTableView, animate: true)
+        scrollToPlayingItem(chapterTableView, animate: true)
       }
     }
   }
@@ -226,7 +226,7 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
     return false
   }
 
-  private func getCurrentRowIndex(_ tableView: NSTableView) -> Int? {
+  private func getPlayingRow(_ tableView: NSTableView) -> Int? {
     // Select left table column
     let column = tableView.column(withIdentifier: .isChosen)
     // Find row with playback indicator (▶︎) and return its index
@@ -239,9 +239,9 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
     return nil
   }
 
-  private func scrollToCurrentItem(_ tableView: NSTableView, animate: Bool) {
+  private func scrollToPlayingItem(_ tableView: NSTableView, animate: Bool) {
     // Get index of currently active playlist item or chapter
-    guard let currentRow = getCurrentRowIndex(tableView) else { return }
+    guard let currentRow = getPlayingRow(tableView) else { return }
     // Abort if row is already visible
     guard isRowVisible(tableView, row: currentRow) == false else { return }
     // Lookup NSTableView subviews
