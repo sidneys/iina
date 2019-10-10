@@ -98,6 +98,10 @@ struct Preference {
     static let playlistShowMetadata = Key("playlistShowMetadata")
     static let playlistShowMetadataInMusicMode = Key("playlistShowMetadataInMusicMode")
 
+    /** Playlist & Chapterlist Auto-Scrolling  */
+    static let playlistAutoScroll = Key("playlistAutoScroll")
+    static let chapterlistAutoScroll = Key("chapterlistAutoScroll")
+
     // UI
 
     /** Horizontal positon of control bar. (float, 0 - 1) */
@@ -698,6 +702,9 @@ struct Preference {
     .playlistAutoPlayNext: true,
     .playlistShowMetadata: true,
     .playlistShowMetadataInMusicMode: true,
+
+    .playlistAutoScroll: false,
+    .chapterlistAutoScroll: false,
 
     .usePhysicalResolution: true,
     .initialWindowSizePosition: "",

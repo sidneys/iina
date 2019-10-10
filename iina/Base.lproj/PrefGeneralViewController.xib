@@ -442,8 +442,8 @@
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="IBP-Mz-Maa"/>
         <customObject id="7jz-PW-fuz" customClass="SUUpdater"/>
-        <customView id="y7O-rd-dnT">
-            <rect key="frame" x="0.0" y="0.0" width="580" height="114"/>
+        <customView misplaced="YES" id="y7O-rd-dnT">
+            <rect key="frame" x="0.0" y="0.0" width="580" height="150"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField identifier="SectionTitlePlaylist" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6gO-wx-MWj">
@@ -503,29 +503,67 @@
                         <binding destination="IBP-Mz-Maa" name="value" keyPath="values.playlistShowMetadataInMusicMode" id="nxW-hX-9co"/>
                     </connections>
                 </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JKX-l9-pvf">
+                    <rect key="frame" x="118" y="56" width="86" height="16"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="List Scrolling:" id="3s4-7n-hS1">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="Uqq-F9-ONP">
+                    <rect key="frame" x="118" y="10" width="254" height="18"/>
+                    <buttonCell key="cell" type="check" title="Scroll to current chapter automatically" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="GZd-Ic-JWA">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="IBP-Mz-Maa" name="value" keyPath="values.chapterlistAutoScroll" id="tzU-g5-Dnb"/>
+                    </connections>
+                </button>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="c4F-Qo-Lp2">
+                    <rect key="frame" x="118" y="32" width="280" height="18"/>
+                    <buttonCell key="cell" type="check" title="Scroll to current playlist item automatically" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Zhz-zc-Ulp">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="IBP-Mz-Maa" name="value" keyPath="values.playlistAutoScroll" id="Wp8-UK-W4D"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="YDQ-cu-7vE" firstAttribute="leading" secondItem="UHf-eK-ba5" secondAttribute="leading" id="0Kh-Ym-ocl"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="OVz-Nv-1WW" secondAttribute="trailing" id="9pX-b8-Q44"/>
                 <constraint firstItem="UHf-eK-ba5" firstAttribute="top" secondItem="OVz-Nv-1WW" secondAttribute="bottom" constant="8" id="Cp1-Yt-5u8"/>
+                <constraint firstAttribute="bottom" secondItem="Uqq-F9-ONP" secondAttribute="bottom" constant="12" id="EA3-31-Muf"/>
                 <constraint firstItem="6gO-wx-MWj" firstAttribute="leading" secondItem="y7O-rd-dnT" secondAttribute="leading" id="HHh-Ci-kWH"/>
                 <constraint firstItem="ey2-TT-Tl9" firstAttribute="top" secondItem="YDQ-cu-7vE" secondAttribute="bottom" constant="8" id="MQj-y6-fEt"/>
                 <constraint firstAttribute="bottom" secondItem="ey2-TT-Tl9" secondAttribute="bottom" constant="8" id="OH2-dz-anH"/>
                 <constraint firstItem="OVz-Nv-1WW" firstAttribute="leading" secondItem="xmd-ef-R8e" secondAttribute="leading" constant="18" id="PV1-DS-RhV"/>
                 <constraint firstItem="UHf-eK-ba5" firstAttribute="leading" secondItem="xmd-ef-R8e" secondAttribute="leading" id="QpE-IK-2rs"/>
                 <constraint firstItem="6gO-wx-MWj" firstAttribute="top" secondItem="y7O-rd-dnT" secondAttribute="top" constant="8" id="R9Q-BW-yNL"/>
+                <constraint firstItem="JKX-l9-pvf" firstAttribute="top" secondItem="UHf-eK-ba5" secondAttribute="bottom" constant="16" id="Szf-2I-fG9"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="JKX-l9-pvf" secondAttribute="trailing" id="UqV-EE-SCB"/>
                 <constraint firstItem="xmd-ef-R8e" firstAttribute="leading" secondItem="y7O-rd-dnT" secondAttribute="leading" constant="120" id="WmZ-xJ-nJr"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="YDQ-cu-7vE" secondAttribute="trailing" id="a4R-ug-WId"/>
                 <constraint firstItem="ey2-TT-Tl9" firstAttribute="leading" secondItem="YDQ-cu-7vE" secondAttribute="leading" constant="20" id="aVN-BA-zZz"/>
                 <constraint firstItem="YDQ-cu-7vE" firstAttribute="top" secondItem="UHf-eK-ba5" secondAttribute="bottom" constant="8" id="fru-O3-rhE"/>
+                <constraint firstItem="Uqq-F9-ONP" firstAttribute="top" secondItem="c4F-Qo-Lp2" secondAttribute="bottom" constant="8" id="Z90-Ka-SDL"/>
+                <constraint firstItem="c4F-Qo-Lp2" firstAttribute="top" secondItem="JKX-l9-pvf" secondAttribute="bottom" constant="8" id="ZFi-b9-5QT"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="c4F-Qo-Lp2" secondAttribute="trailing" id="Zus-fk-Rhc"/>
+                <constraint firstItem="c4F-Qo-Lp2" firstAttribute="leading" secondItem="xmd-ef-R8e" secondAttribute="leading" id="fZd-1v-yVX"/>
                 <constraint firstItem="6gO-wx-MWj" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="y7O-rd-dnT" secondAttribute="leading" constant="120" id="hMc-8k-u0x"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Uqq-F9-ONP" secondAttribute="trailing" id="hhC-A4-OW5"/>
+                <constraint firstItem="JKX-l9-pvf" firstAttribute="leading" secondItem="xmd-ef-R8e" secondAttribute="leading" id="jRY-6k-7OV"/>
                 <constraint firstItem="OVz-Nv-1WW" firstAttribute="top" secondItem="xmd-ef-R8e" secondAttribute="bottom" constant="4" id="knP-0X-jJU"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xmd-ef-R8e" secondAttribute="trailing" id="o3a-bC-bx3"/>
+                <constraint firstItem="Uqq-F9-ONP" firstAttribute="leading" secondItem="xmd-ef-R8e" secondAttribute="leading" id="pVZ-fB-md4"/>
                 <constraint firstItem="6gO-wx-MWj" firstAttribute="top" secondItem="xmd-ef-R8e" secondAttribute="top" id="q99-S9-zIq"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ey2-TT-Tl9" secondAttribute="trailing" id="uQH-zS-Roq"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="UHf-eK-ba5" secondAttribute="trailing" id="z5V-cR-cmi"/>
             </constraints>
-            <point key="canvasLocation" x="-2190" y="621.5"/>
+            <point key="canvasLocation" x="-2190" y="571"/>
         </customView>
         <customView misplaced="YES" id="ym1-pZ-4SZ">
             <rect key="frame" x="0.0" y="0.0" width="580" height="184"/>
