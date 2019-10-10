@@ -218,13 +218,20 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
 
   // MARK: - Scroll to current playlist item / chapter
 
+  private func isRowVisible(_ tableView: NSTableView, row: Int) -> Bool {
+    let visibleRows = tableView.rows(in: tableView.visibleRect)
+    if (visibleRows.contains(row)) {
+      return true
+    }
+    return false
+  }
+
   private func getCurrentRowIndex(_ tableView: NSTableView) -> Int? {
     // Select left table column
     let column = tableView.column(withIdentifier: .isChosen)
-    // Find row with text "▶︎" and return its index
+    // Find row with playback indicator (▶︎) and return its index
     for row in 0..<numberOfRows(in: tableView) {
       let view = tableView.view(atColumn: column, row: row, makeIfNecessary: true) as! NSTableCellView
-
       if (view.textField?.stringValue == Constants.String.play) {
         return row
       }
@@ -233,9 +240,12 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
   }
 
   private func scrollToCurrentItem(_ tableView: NSTableView, animate: Bool) {
-    guard let rowIndex = getCurrentRowIndex(tableView) else { return }
+    // Get index of currently active playlist item or chapter
+    guard let currentRow = getCurrentRowIndex(tableView) else { return }
+    // Abort if row is already visible
+    guard isRowVisible(tableView, row: currentRow) == false else { return }
     // Lookup NSTableView subviews
-    let rowRect = tableView.rect(ofRow: rowIndex)
+    let rowRect = tableView.rect(ofRow: currentRow)
     var scrollOrigin = rowRect.origin
     let clipView = tableView.superview as? NSClipView
     let scrollView = clipView!.superview as? NSScrollView
