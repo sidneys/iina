@@ -149,14 +149,18 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
     if playlist {
       player.getPlaylist()
       playlistTableView.reloadData()
+      if Preference.bool(for: .playlistAutoScroll) {
         scrollToCurrentItem(playlistTableView, animate: true)
       }
+    }
     if chapters {
       player.getChapters()
       chapterTableView.reloadData()
+      if Preference.bool(for: .chapterlistAutoScroll) {
         scrollToCurrentItem(chapterTableView, animate: true)
       }
     }
+  }
 
   private func showTotalLength() {
     guard let playlistTotalLength = playlistTotalLength, playlistTotalLengthIsReady else { return }
