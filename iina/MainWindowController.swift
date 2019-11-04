@@ -23,7 +23,7 @@ fileprivate let OSCTopMainViewMarginTopInFullScreen: CGFloat = 6
 
 fileprivate let SettingsWidth: CGFloat = 360
 fileprivate let PlaylistMinWidth: CGFloat = 240
-fileprivate let PlaylistMaxWidth: CGFloat = 400
+fileprivate let PlaylistMaxWidth: CGFloat = 800
 
 fileprivate let InteractiveModeBottomViewHeight: CGFloat = 60
 
