@@ -81,6 +81,7 @@
 "osd.canceled" = "Zrušené";
 "osd.filter_added" = "Pridaný filter: %@";
 "osd.filter_removed" = "Odstránený filter";
+"osd.track_added" = "Pridaný skladba: %@";
 
 "preference.title" = "Nastavenia";
 "preference.general" = "Všeobecné";

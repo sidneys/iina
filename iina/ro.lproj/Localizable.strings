@@ -81,6 +81,7 @@
 "osd.canceled" = "Anulat";
 "osd.filter_added" = "Filtru adăugat: %@";
 "osd.filter_removed" = "Filtru șters";
+"osd.track_added" = "Pista adăugat: %@";
 
 "preference.title" = "Preferințe";
 "preference.general" = "General";

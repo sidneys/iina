@@ -81,6 +81,7 @@
 "osd.canceled" = "Anulowane";
 "osd.filter_added" = "Dodano filtr: %@";
 "osd.filter_removed" = "Usunięto filtr";
+"osd.track_added" = "Dodano ścieżka: %@";
 
 "preference.title" = "Preferencje";
 "preference.general" = "Ogólne";

@@ -81,6 +81,7 @@
 "osd.canceled" = "취소됨";
 "osd.filter_added" = "필터 추가됨: %@";
 "osd.filter_removed" = "필터 제거됨";
+"osd.track_added" = "트랙 추가: %@";
 
 "preference.title" = "환경설정";
 "preference.general" = "일반";

@@ -81,6 +81,7 @@
 "osd.canceled" = "Скасовано";
 "osd.filter_added" = "Доданий фільтр: %@";
 "osd.filter_removed" = "Видалений фільтр";
+"osd.track_added" = "Доданий Доріжка: %@";
 
 "preference.title" = "Параметри";
 "preference.general" = "Загальні";

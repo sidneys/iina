@@ -79,8 +79,9 @@
 "osd.file_error" = "Lesefehler";
 "osd.cannot_login" = "Anmeldung fehlgeschlagen";
 "osd.canceled" = "Abgebrochen";
-"osd.filter_added" = "Filter \"%@\" hinzugefügt";
+"osd.filter_added" = "Filter hinzugefügt: %@";
 "osd.filter_removed" = "Filter gelöscht";
+"osd.track_added" = "Track hinzugefügt: %@";
 
 "preference.title" = "Einstellungen";
 "preference.general" = "Allgemein";

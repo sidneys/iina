@@ -81,6 +81,7 @@
 "osd.canceled" = "Отменено";
 "osd.filter_added" = "Добавлен фильтр: %@";
 "osd.filter_removed" = "Фильтр удален";
+"osd.track_added" = "Добавлен Трек: %@";
 
 "preference.title" = "Настройки";
 "preference.general" = "Основные";

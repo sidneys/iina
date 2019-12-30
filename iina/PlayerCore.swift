@@ -718,36 +718,53 @@ class PlayerCore: NSObject {
     mpv.command(.set, args: [optionName, value.description])
   }
 
-  func loadExternalAudioFile(_ url: URL) {
-    mpv.command(.audioAdd, args: [url.path], checkError: false) { code in
+  func loadExternalAudioFile(_ url: URL, flags: String = "select") {
+    mpv.command(.audioAdd, args: [url.path, flags], checkError: false) { code in
       if code < 0 {
-        Logger.log("Unsupported audio: \(url.path)", level: .error, subsystem: self.subsystem)
-        DispatchQueue.main.async {
-          Utility.showAlert("unsupported_audio")
-        }
+        Logger.log("Unsupported audio: \(url.path) flags: \(flags)", level: .error, subsystem: self.subsystem)
+        // DispatchQueue.main.async {
+        //  Utility.showAlert("unsupported_audio")
+        // }
+      } else {
+        self.sendOSD(.addTrack(.audio))
       }
     }
   }
 
-  func loadExternalSubFile(_ url: URL, delay: Bool = false) {
+  func loadExternalVideoFile(_ url: URL, flags: String = "select") {
+    mpv.command(.videoAdd, args: [url.path, flags], checkError: false) { code in
+      if code < 0 {
+        Logger.log("Unsupported video: \(url.path) flags: \(flags)", level: .error, subsystem: self.subsystem)
+        // DispatchQueue.main.async {
+        //  Utility.showAlert("unsupported_video")
+        // }
+      } else {
+        self.sendOSD(.addTrack(.video))
+      }
+    }
+  }
+
+  func loadExternalSubFile(_ url: URL, flags: String = "select", delay: Bool = false) {
     if let track = info.subTracks.first(where: { $0.externalFilename == url.path }) {
       mpv.command(.subReload, args: [String(track.id)], checkError: false)
       return
     }
 
-    mpv.command(.subAdd, args: [url.path], checkError: false) { code in
+    mpv.command(.subAdd, args: [url.path, flags], checkError: false) { code in
       if code < 0 {
-        Logger.log("Unsupported sub: \(url.path)", level: .error, subsystem: self.subsystem)
-        // if another modal panel is shown, popping up an alert now will cause some infinite loop.
-        if delay {
-          DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
-            Utility.showAlert("unsupported_sub")
-          }
-        } else {
-          DispatchQueue.main.async {
-            Utility.showAlert("unsupported_sub")
-          }
-        }
+        Logger.log("Unsupported sub: \(url.path) flags: \(flags)", level: .error, subsystem: self.subsystem)
+        // // if another modal panel is shown, popping up an alert now will cause some infinite loop.
+        // if delay {
+        //   DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+        //     Utility.showAlert("unsupported_sub")
+        //   }
+        // } else {
+        //   DispatchQueue.main.async {
+        //     Utility.showAlert("unsupported_sub")
+        //   }
+        // }
+      } else {
+        self.sendOSD(.addTrack(.sub))
       }
     }
   }

@@ -81,6 +81,7 @@
 "osd.canceled" = "Cancelado";
 "osd.filter_added" = "Filtro Añadido: %@";
 "osd.filter_removed" = "Filtro Eliminado";
+"osd.track_added" = "Pista Añadido: %@";
 
 "preference.title" = "Preferencias";
 "preference.general" = "General";

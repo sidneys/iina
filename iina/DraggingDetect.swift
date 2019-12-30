@@ -181,7 +181,44 @@ extension PlayerCore {
       }
 
       let urls = paths.map{ URL(fileURLWithPath: $0) }
-      // try open files
+
+      // Hold Option during file Drag-Drop to add media files as tracks to current playlist item
+      if let theEvent = NSApp.currentEvent, theEvent.modifierFlags.contains([.option]) {
+        for url in urls where !url.hasDirectoryPath {
+          Logger.log("trying to add file: \(url)")
+          let fileExt = url.pathExtension.lowercased()
+
+          // Video
+          if Utility.supportedFileExt[.video]!.contains(fileExt) {
+            DispatchQueue.main.async {
+              Logger.log("adding video/audio/subtitle tracks from video file")
+              self.loadExternalVideoFile(url, flags: "auto")
+            }
+            return true
+          }
+
+           // Audio
+          if Utility.supportedFileExt[.audio]!.contains(fileExt) {
+            DispatchQueue.main.async {
+              Logger.log("adding audio track from audio file")
+              self.loadExternalAudioFile(url, flags: "auto")
+            }
+            return true
+          }
+
+          // Subtitle
+          if Utility.supportedFileExt[.sub]!.contains(fileExt) {
+            DispatchQueue.main.async {
+              Logger.log("adding subtitle track from subtitle file")
+              self.loadExternalSubFile(url, flags: "auto")
+              self.reloadAllSubs()
+            }
+            return true
+          }
+        }
+      }
+
+      // try to open files
       guard let loadedFileCount = openURLs(urls) else { return true }
       if loadedFileCount == 0 {
         // if no playable files, try add subtitle files

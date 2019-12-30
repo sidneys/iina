@@ -81,6 +81,7 @@
 "osd.canceled" = "रद्द";
 "osd.filter_added" = "जोड़ा गया फ़िल्टर: %@";
 "osd.filter_removed" = "फ़िल्टर हटाया गया";
+"osd.track_added" = "जोड़ा गया ट्रैक: %@";
 
 "preference.title" = "पसंद";
 "preference.general" = "सामान्य";

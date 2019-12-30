@@ -81,6 +81,7 @@
 "osd.canceled" = "Avbruten";
 "osd.filter_added" = "La till filter: %@";
 "osd.filter_removed" = "Tog bort filter";
+"osd.track_added" = "La till spår: %@";
 
 "preference.title" = "Inställningar";
 "preference.general" = "Allmänt";

@@ -51,6 +51,7 @@ enum OSDMessage {
   case stop
   case chapter(String)
   case track(MPVTrack)
+  case addTrack(MPVTrack.TrackType)
   case addToPlaylist(Int)
   case clearPlaylist
 
@@ -199,6 +200,21 @@ enum OSDMessage {
       case .secondSub: trackTypeStr = "Second Subtitle"
       }
       return (trackTypeStr + ": " + track.readableTitle, .normal)
+
+    case .addTrack(var type):
+      type = type == .secondSub ? .sub : type
+      //let typeStr: String
+      //switch type {
+      //case .video: typeStr = "Video Track"
+     // case .audio: typeStr = "Audio Track"
+      //case .sub,  .secondSub: typeStr = "Subtitle Track"
+      //}
+      let typeStr = "\(type)".capitalized
+
+      return (
+        String(format: NSLocalizedString("osd.track_added", comment: "Added Track: %@"), typeStr),
+        .normal
+      )
 
     case .subScale(let value):
       return (

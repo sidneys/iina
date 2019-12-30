@@ -81,6 +81,7 @@
 "osd.canceled" = "İptal edildi";
 "osd.filter_added" = "Eklenen filtre: %@";
 "osd.filter_removed" = "Filtre kaldırıldı";
+"osd.track_added" = "Eklenen parça: %@";
 
 "preference.title" = "Tercihler";
 "preference.general" = "Genel";

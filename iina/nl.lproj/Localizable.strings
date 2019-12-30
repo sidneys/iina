@@ -81,6 +81,7 @@
 "osd.canceled" = "Geannuleerd";
 "osd.filter_added" = "Filter toegevoegd: %@";
 "osd.filter_removed" = "Filter verwijderd";
+"osd.track_added" = "Spoor toegevoegd: %@";
 
 "preference.title" = "Voorkeuren";
 "preference.general" = "Algemeen";

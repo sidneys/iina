@@ -81,6 +81,7 @@
 "osd.canceled" = "已取消";
 "osd.filter_added" = "已添加滤镜: %@";
 "osd.filter_removed" = "已移除滤镜";
+"osd.track_added" = "新增曲目: %@";
 
 "preference.title" = "偏好设置";
 "preference.general" = "通用";

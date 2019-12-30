@@ -81,7 +81,7 @@
 "osd.canceled" = "キャンセルされました";
 "osd.filter_added" = "追加したフィルター: %@";
 "osd.filter_removed" = "削除したフィルター";
-
+"osd.track_added" = "追加されたトラック: %@";
 "preference.title" = "環境設定";
 "preference.general" = "一般";
 "preference.ui" = "UI";
