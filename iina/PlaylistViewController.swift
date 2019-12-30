@@ -149,15 +149,17 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
     if playlist {
       player.getPlaylist()
       playlistTableView.reloadData()
+      // Auto-Scroll Playlist
       if Preference.bool(for: .playlistAutoScroll) {
-        scrollToPlayingItem(playlistTableView, animate: true)
+        scrollToPlayingItem(playlistTableView)
       }
     }
     if chapters {
       player.getChapters()
       chapterTableView.reloadData()
+      // Auto-Scroll Chapters
       if Preference.bool(for: .chapterlistAutoScroll) {
-        scrollToPlayingItem(chapterTableView, animate: true)
+        scrollToPlayingItem(chapterTableView)
       }
     }
   }
@@ -216,7 +218,7 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
     loopBtn.state = (loopStatus == "inf" || loopStatus == "force") ? .on : .off
   }
 
-  // MARK: - Scroll to current playlist item / chapter
+  // MARK: - Automatic scrolling to currently playing item
 
   private func isRowVisible(_ tableView: NSTableView, row: Int) -> Bool {
     let visibleRows = tableView.rows(in: tableView.visibleRect)
@@ -239,28 +241,39 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
     return nil
   }
 
-  private func scrollToPlayingItem(_ tableView: NSTableView, animate: Bool) {
+  private func scrollToPlayingItem(_ tableView: NSTableView, animate: Bool = true, force: Bool = false, duration: Double = 3.0) {
     // Get index of currently active playlist item or chapter
     guard let currentRow = getPlayingRow(tableView) else { return }
-    // Abort if row is already visible
-    guard isRowVisible(tableView, row: currentRow) == false else { return }
-    // Lookup NSTableView subviews
-    let rowRect = tableView.rect(ofRow: currentRow)
-    var scrollOrigin = rowRect.origin
+
+    // Try to scroll if row's already visible?
+    guard !isRowVisible(tableView, row: currentRow) || force else { return }
+
+    // NSTableView subviews (clipview, scrollview)
     let clipView = tableView.superview as? NSClipView
     let scrollView = clipView!.superview as? NSScrollView
-    // Calculate scroll target offset position (vertically centered)
-    let tableHalfHeight = NSHeight(clipView!.frame) * 0.5
-    let rowRectHalfHeight = NSHeight(rowRect) * 0.5
-    scrollOrigin.y = (scrollOrigin.y - tableHalfHeight) + rowRectHalfHeight
-    // Show scroll bar
-    scrollView!.flashScrollers()
-    // Scroll to target offset
+
+    // Get coordinates of views
+    let rowRect = tableView.rect(ofRow: currentRow)
+    let viewRect = clipView?.frame
+
+    // Calculate target scroll offset
+    var scrollOrigin = rowRect.origin
+    scrollOrigin.y = scrollOrigin.y + (rowRect.size.height - viewRect!.size.height) / 2
+
+    // Limit offset to positive values
+    if (scrollOrigin.y < 0) { scrollOrigin.y = 0 }
+
+    // Scroll
     if (animate) {
-      // Animated
+      // Configure animation
+      NSAnimationContext.beginGrouping()
+      NSAnimationContext.current.duration = duration
+      // Update scroll offset (animated)
       clipView!.animator().setBoundsOrigin(scrollOrigin)
+      scrollView?.reflectScrolledClipView(clipView!)
+      NSAnimationContext.endGrouping()
     } else {
-      // Non-animated
+      // Update scroll offset (static)
       clipView!.setBoundsOrigin(scrollOrigin)
     }
   }
