@@ -306,6 +306,19 @@
                                                     <action selector="addToPlaylistBtnAction:" target="-2" id="glx-Rv-Iri"/>
                                                 </connections>
                                             </button>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AVa-fg-XaK" userLabel="Font Size Button">
+                                                <rect key="frame" x="50" y="0.0" width="24" height="24"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="24" id="rjy-sV-Qoq"/>
+                                                </constraints>
+                                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="textsize" imagePosition="overlaps" alignment="center" alternateImage="textsize-dark" lineBreakMode="truncatingTail" imageScaling="proportionallyDown" inset="2" id="gwz-hg-K1c">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="textScaleBtnAction:" target="-2" id="4vR-72-o6r"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="7my-AM-8Ts" secondAttribute="trailing" constant="2" id="1Sc-nK-8IE"/>
@@ -317,10 +330,7 @@
                                             <constraint firstAttribute="bottom" secondItem="xKm-J1-NZs" secondAttribute="bottom" id="L7x-2J-yyG"/>
                                             <constraint firstItem="7my-AM-8Ts" firstAttribute="top" secondItem="X2W-MY-vYB" secondAttribute="top" id="LE8-YD-ghx"/>
                                             <constraint firstItem="icQ-T6-fV9" firstAttribute="centerX" secondItem="X2W-MY-vYB" secondAttribute="centerX" id="LSa-Bd-2wQ"/>
-                                            <constraint firstAttribute="bottom" secondItem="AVa-fg-XaK" secondAttribute="bottom" id="Q4p-PK-uSL"/>
-                                            <constraint firstItem="7my-AM-8Ts" firstAttribute="leading" secondItem="W9C-Z7-hiI" secondAttribute="trailing" id="TqF-O6-xHW"/>
                                             <constraint firstItem="IHI-5g-OMg" firstAttribute="top" secondItem="X2W-MY-vYB" secondAttribute="top" id="VVG-ZO-opa"/>
-                                            <constraint firstItem="AVa-fg-XaK" firstAttribute="leading" secondItem="xhU-qn-3aa" secondAttribute="trailing" id="VXN-gR-hI4"/>
                                             <constraint firstItem="xhU-qn-3aa" firstAttribute="leading" secondItem="IHI-5g-OMg" secondAttribute="trailing" id="beQ-YD-Oxf"/>
                                             <constraint firstItem="xKm-J1-NZs" firstAttribute="leading" secondItem="W9C-Z7-hiI" secondAttribute="trailing" id="lwV-Uv-v1i"/>
                                             <constraint firstAttribute="bottom" secondItem="xhU-qn-3aa" secondAttribute="bottom" id="mPm-LR-ZkL"/>
@@ -328,10 +338,12 @@
                                             <constraint firstItem="xKm-J1-NZs" firstAttribute="top" secondItem="X2W-MY-vYB" secondAttribute="top" id="q0k-4V-oj8"/>
                                             <constraint firstItem="icQ-T6-fV9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="xhU-qn-3aa" secondAttribute="trailing" constant="4" id="qGM-Ip-dO0"/>
                                             <constraint firstItem="W9C-Z7-hiI" firstAttribute="top" secondItem="X2W-MY-vYB" secondAttribute="top" id="qUl-cf-d3q"/>
-                                            <constraint firstItem="AVa-fg-XaK" firstAttribute="top" secondItem="X2W-MY-vYB" secondAttribute="top" id="qmX-bm-39E"/>
                                             <constraint firstItem="IHI-5g-OMg" firstAttribute="leading" secondItem="X2W-MY-vYB" secondAttribute="leading" constant="2" id="shV-bB-ELD"/>
                                             <constraint firstAttribute="bottom" secondItem="IHI-5g-OMg" secondAttribute="bottom" id="uNy-QA-naW"/>
                                             <constraint firstAttribute="height" constant="24" id="vRf-T5-e5u"/>
+                                            <constraint firstAttribute="bottom" secondItem="AVa-fg-XaK" secondAttribute="bottom" id="Q4p-PK-uSL"/>
+                                            <constraint firstItem="AVa-fg-XaK" firstAttribute="leading" secondItem="xhU-qn-3aa" secondAttribute="trailing" id="VXN-gR-hI4"/>
+                                            <constraint firstItem="AVa-fg-XaK" firstAttribute="top" secondItem="X2W-MY-vYB" secondAttribute="top" id="qmX-bm-39E"/>
                                         </constraints>
                                     </customView>
                                 </subviews>
