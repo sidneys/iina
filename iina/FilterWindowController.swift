@@ -61,6 +61,7 @@ class FilterWindowController: NSWindowController, NSWindowDelegate {
 
     savedFilters = (Preference.array(for: filterType == MPVProperty.af ? .savedAudioFilters : .savedVideoFilters) ?? []).compactMap(SavedFilter.init(dict:))
     filters = PlayerCore.active.mpv.getFilters(filterType)
+    filterIsSaved = [Bool](repeatElement(false, count: filters.count))
     currentFiltersTableView.reloadData()
     savedFiltersTableView.reloadData()
 
