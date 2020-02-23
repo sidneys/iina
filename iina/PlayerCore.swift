@@ -1332,14 +1332,14 @@ class PlayerCore: NSObject {
       DispatchQueue.main.async {
         // this should avoid sending reload when table view is not ready
         if self.isInMiniPlayer ? self.miniPlayer.isPlaylistVisible : self.mainWindow.sideBarStatus == .playlist {
-          self.mainWindow.playlistView.chapterTableView.reloadData()
+          self.mainWindow.playlistView.reloadData(playlist: false, chapters: true)
         }
       }
 
     case .playlist:
       DispatchQueue.main.async {
         if self.isPlaylistVisible {
-          self.mainWindow.playlistView.playlistTableView.reloadData()
+          self.mainWindow.playlistView.reloadData(playlist: true, chapters: false)
         }
       }
 

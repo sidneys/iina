@@ -61,6 +61,7 @@ class MPVController: NSObject {
 
   let observeProperties: [String: mpv_format] = [
     MPVProperty.trackList: MPV_FORMAT_NONE,
+    MPVProperty.playlist: MPV_FORMAT_NONE,
     MPVProperty.vf: MPV_FORMAT_NONE,
     MPVProperty.af: MPV_FORMAT_NONE,
     MPVOption.TrackSelection.vid: MPV_FORMAT_INT64,
@@ -704,6 +705,7 @@ class MPVController: NSObject {
       setFlag(MPVOption.PlaybackControl.pause, false)
     }
     player.syncUI(.playlist)
+    player.postNotification(.iinaPlaylistChanged)
   }
 
   private func onVideoReconfig() {
@@ -903,7 +905,7 @@ class MPVController: NSObject {
 
     // following properties may change before file loaded
 
-    case MPVProperty.playlistCount:
+    case MPVProperty.playlist:
       player.postNotification(.iinaPlaylistChanged)
 
     case MPVProperty.trackList:
