@@ -190,16 +190,16 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
         totalDuration = nil
         break
       }
-    }
-    if let duration = totalDuration {
-      playlistTotalLengthIsReady = true
-      playlistTotalLength = duration
-      DispatchQueue.main.async {
-        self.showTotalLength()
-      }
-    } else {
-      DispatchQueue.main.async {
-        self.hideTotalLength()
+      if let duration = totalDuration {
+        self.playlistTotalLengthIsReady = true
+        self.playlistTotalLength = duration
+        DispatchQueue.main.async {
+          self.showTotalLength()
+        }
+      } else {
+        DispatchQueue.main.async {
+          self.hideTotalLength()
+        }
       }
     }
   }
