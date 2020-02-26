@@ -704,7 +704,6 @@ class MPVController: NSObject {
     if !(player.info.justOpenedFile && Preference.bool(for: .pauseWhenOpen)) {
       setFlag(MPVOption.PlaybackControl.pause, false)
     }
-    player.syncUI(.playlist)
     player.postNotification(.iinaPlaylistChanged)
   }
 

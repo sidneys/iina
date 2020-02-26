@@ -109,10 +109,12 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
       pendingSwitchRequest = nil
     }
 
-    // nofitications
+    // notifications
     playlistChangeObserver = NotificationCenter.default.addObserver(forName: .iinaPlaylistChanged, object: player, queue: OperationQueue.main) { _ in
+      if self.player.isInMiniPlayer ? self.player.miniPlayer.isPlaylistVisible : self.mainWindow.sideBarStatus == .playlist {
       self.playlistTotalLengthIsReady = false
       self.reloadData(playlist: true, chapters: false)
+    }
     }
 
     // register for double click action
