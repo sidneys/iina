@@ -1766,27 +1766,21 @@ class MainWindowController: PlayerWindowController {
     }
   }
 
-  // MARK: - UI: Chapter Overview Grid View
+  // MARK: - UI: Chapter Grid View Overlay
 
   func showChapterGrid() {
+    // Init Chapter Grid View now
     _ = chapterGridView
-    chapterGridView.view.isHidden = false
 
-    Logger.log("Chapter Grid enabled")
+    chapterGridView.showView()
   }
 
   func hideChapterGrid() {
-    chapterGridView.view.isHidden = true
-
-    Logger.log("Chapter Grid disabled")
+    chapterGridView.hideView()
   }
 
   func toggleChapterGrid() {
-    if !chapterGridView.isViewLoaded || chapterGridView.view.isHidden {
-      showChapterGrid()
-    } else {
-      hideChapterGrid()
-    }
+    chapterGridView.toggleView()
   }
 
   // MARK: - UI: "Fadeable" views
