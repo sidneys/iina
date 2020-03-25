@@ -200,11 +200,12 @@ private class ChapterItem: NSCollectionViewItem {
 
       // Set Cell Label
       if let chapter = chapter {
+        // Lookup Chapter Title from MPV
         if !chapter.title.isEmpty {
           chapterLabel = chapter.title
         }
 
-        // Set Cell Image
+        // Lookup Chapter Thumbnail from IINA
         if let player = (self.collectionView as! ChapterCollectionView).player, player.info.thumbnailsReady, let tb = player.info.getThumbnail(forSecond: chapter.time.second) {
           chapterThumbnail = tb.image
         }
@@ -253,6 +254,7 @@ private class ChapterView: NSView {
   override init(frame frameRect: NSRect) {
     super.init(frame: NSRect(origin: frameRect.origin, size: itemSize))
 
+    // Label Layout Configuration
     let textField = NSTextField(frame: NSRect(origin: .zero, size: labelSize))
     textField.backgroundColor = NSColor(white: 0, alpha: 0.10)
     textField.isEditable = false
@@ -264,6 +266,7 @@ private class ChapterView: NSView {
     self.addSubview(textField)
     self.label = textField
 
+    // Thumbnail Layout Configuration
     let imageView = ChapterImageView(frame: NSRect(origin: NSPoint(x: 0, y: itemSize.height - thumbnailSize.height), size: thumbnailSize))
     imageView.imageScaling = .scaleProportionallyDown
     imageView.imageAlignment = .alignTopLeft
