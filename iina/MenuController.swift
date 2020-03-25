@@ -92,6 +92,7 @@ class MenuController: NSObject, NSMenuDelegate {
   @IBOutlet weak var previousChapter: NSMenuItem!
   @IBOutlet weak var chapter: NSMenuItem!
   @IBOutlet weak var chapterMenu: NSMenu!
+  @IBOutlet weak var chapterGrid: NSMenuItem!
   // Video
   @IBOutlet weak var videoMenu: NSMenu!
   @IBOutlet weak var quickSettingsVideo: NSMenuItem!
@@ -226,6 +227,7 @@ class MenuController: NSObject, NSMenuDelegate {
     playlistLoop.action = #selector(MainMenuActionHandler.menuPlaylistLoop(_:))
     playlistPanel.action = #selector(MainWindowController.menuShowPlaylistPanel(_:))
     chapterPanel.action = #selector(MainWindowController.menuShowChaptersPanel(_:))
+    chapterGrid.action = #selector(MainWindowController.menuShowChapterGrid(_:))
 
     nextMedia.action = #selector(MainMenuActionHandler.menuNextMedia(_:))
     previousMedia.action = #selector(MainMenuActionHandler.menuPreviousMedia(_:))
@@ -635,6 +637,7 @@ class MenuController: NSObject, NSMenuDelegate {
       (quickSettingsSub, true, ["sub-panel"], false, nil, nil),
       (playlistPanel, true, ["playlist-panel"], false, nil, nil),
       (chapterPanel, true, ["chapter-panel"], false, nil, nil),
+      (chapterGrid, true, ["chapter-grid"], false, nil, nil),
       (findOnlineSub, true, ["find-online-subs"], false, nil, nil),
       (saveDownloadedSub, true, ["save-downloaded-sub"], false, nil, nil),
       (biggerSize, true, ["bigger-window"], false, nil, nil),

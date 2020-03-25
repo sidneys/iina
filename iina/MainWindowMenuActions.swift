@@ -36,6 +36,12 @@ extension MainWindowController {
     }
   }
 
+  @objc func menuShowChapterGrid(_ sender: NSMenuItem) {
+    Logger.log("Menu Action: Show Chapter Grid")
+
+    player.mainWindow.toggleChapterGrid()
+  }
+
   @objc func menuShowVideoQuickSettings(_ sender: NSMenuItem) {
     if sideBarStatus == .hidden || sideBarStatus == .playlist {
       quickSettingView.pleaseSwitchToTab(.video)

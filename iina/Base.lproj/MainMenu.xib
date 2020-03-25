@@ -336,6 +336,10 @@ CA
                             <menuItem title="Previous Chapter" id="pqF-SZ-Ifz">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                             </menuItem>
+                            <menuItem isSeparatorItem="YES" id="XCM-0i-8kP"/>
+                            <menuItem title="Chapter Grid" id="aOS-fL-sPV">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>
@@ -680,6 +684,7 @@ CA
                 <outlet property="backward" destination="Sif-85-FF1" id="w4k-va-FGF"/>
                 <outlet property="biggerSize" destination="lDC-IC-peP" id="fTj-cO-9y3"/>
                 <outlet property="chapter" destination="Fal-I4-PZk" id="DiY-VN-JpS"/>
+                <outlet property="chapterGrid" destination="aOS-fL-sPV" id="6gK-ie-cb5"/>
                 <outlet property="chapterMenu" destination="d9c-me-L2H" id="Gs5-BM-ZGm"/>
                 <outlet property="chapterPanel" destination="DwM-3d-Eb9" id="Z0I-q7-mi7"/>
                 <outlet property="cropMenu" destination="eo2-Tt-SLx" id="uii-FZ-2wL"/>

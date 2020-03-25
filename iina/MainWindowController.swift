@@ -81,6 +81,12 @@ class MainWindowController: PlayerWindowController {
     return playlistView
   }()
 
+  /** The chapter grid thumbnails overlay. */
+  lazy var chapterGridView: ChapterGridViewController = {
+    let chapterGridView = ChapterGridViewController(player: player)
+    return chapterGridView
+  }()
+
   /** The control view for interactive mode. */
   var cropSettingsView: CropBoxViewController?
 
@@ -1757,6 +1763,29 @@ class MainWindowController: PlayerWindowController {
   private func setConstraintsForVideoView(_ constraints: [NSLayoutConstraint.Attribute: CGFloat]) {
     for (attr, value) in constraints {
       videoViewConstraints[attr]?.constant = value
+    }
+  }
+
+  // MARK: - UI: Chapter Overview Grid View
+
+  func showChapterGrid() {
+    _ = chapterGridView
+    chapterGridView.view.isHidden = false
+
+    Logger.log("Chapter Grid enabled")
+  }
+
+  func hideChapterGrid() {
+    chapterGridView.view.isHidden = true
+
+    Logger.log("Chapter Grid disabled")
+  }
+
+  func toggleChapterGrid() {
+    if !chapterGridView.isViewLoaded || chapterGridView.view.isHidden {
+      showChapterGrid()
+    } else {
+      hideChapterGrid()
     }
   }
 
