@@ -81,6 +81,7 @@
 "osd.canceled" = "Annulleret";
 "osd.filter_added" = "Tilføjet filter: %@";
 "osd.filter_removed" = "Fjernet filter";
+"osd.track_added" = "Tilføjet spor: %@";
 
 "preference.title" = "Preferancer";
 "preference.general" = "Generalt";

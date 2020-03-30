@@ -81,6 +81,7 @@
 "osd.canceled" = "لغو شده";
 "osd.filter_added" = "Added Filter: %@";
 "osd.filter_removed" = "Removed Filter";
+"osd.track_added" = "Added Track: %@";
 
 "preference.title" = "تنظیمات";
 "preference.general" = "عمومی";
