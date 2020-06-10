@@ -2561,6 +2561,7 @@ class MainWindowController: PlayerWindowController {
 
   // MARK: Detached Playlist
 
+  @objc
   func isPlaylistFloating() -> Bool {
     return self.playlistWindow != nil
   }
