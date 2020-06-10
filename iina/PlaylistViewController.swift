@@ -316,6 +316,7 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
         }
         Logger.log("Playlist Drag & Drop from \(oldIndex) to \(row)")
       }
+      self.reloadData(playlist: true, chapters: false)
       player.postNotification(.iinaPlaylistChanged)
       return true
     }
