@@ -78,6 +78,30 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
     }
   }
 
+  func isShowingTab(_ tab: TabViewType) -> Bool {
+    guard let tabItem = tabView.selectedTabViewItem else { return false }
+
+    return tab.rawValue == tabView.indexOfTabViewItem(tabItem)
+  }
+
+  func isShowingList(_ tab: TabViewType) -> Bool {
+    let selected = self.isShowingTab(tab)
+    var visible: Bool = false
+
+    // Is either list visible?
+    if self.player.isInMiniPlayer, self.player.miniPlayer.isPlaylistVisible {
+        visible = true
+    }
+    if self.mainWindow.responds(to: Selector(("isPlaylistFloating"))), self.mainWindow.isPlaylistFloating() {
+       visible = true
+    }
+    if self.mainWindow.sideBarStatus == .playlist {
+      visible = true
+    }
+
+    return visible && selected
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
     withAllTableViews { (view) in
@@ -111,10 +135,12 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
 
     // notifications
     playlistChangeObserver = NotificationCenter.default.addObserver(forName: .iinaPlaylistChanged, object: player, queue: OperationQueue.main) { _ in
-      if self.player.isInMiniPlayer ? self.player.miniPlayer.isPlaylistVisible : self.mainWindow.sideBarStatus == .playlist {
-      self.playlistTotalLengthIsReady = false
-      self.reloadData(playlist: true, chapters: false)
-    }
+
+      // Check if playlist view is visible
+      if self.isShowingList(.playlist) {
+        self.playlistTotalLengthIsReady = false
+        self.reloadData(playlist: true, chapters: false)
+      }
     }
 
     // register for double click action
