@@ -92,7 +92,7 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
     if self.player.isInMiniPlayer, self.player.miniPlayer.isPlaylistVisible {
         visible = true
     }
-    if self.mainWindow.responds(to: Selector(("isPlaylistFloating"))), self.mainWindow.isPlaylistFloating() {
+    if self.mainWindow.responds(to: #selector(self.mainWindow.isPlaylistFloating)), self.mainWindow.isPlaylistFloating() {
        visible = true
     }
     if self.mainWindow.sideBarStatus == .playlist {
