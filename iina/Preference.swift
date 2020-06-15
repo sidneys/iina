@@ -781,7 +781,7 @@ struct Preference {
     .enableAdvancedSettings: false,
     .useMpvOsd: false,
     .enableLogging: false,
-    .logLevel: Logger.Level.debug.rawValue,
+    .logLevel: Logger.Level.warning.rawValue,
     .displayKeyBindingRawValues: false,
     .userOptions: [],
     .useUserDefinedConfDir: false,
