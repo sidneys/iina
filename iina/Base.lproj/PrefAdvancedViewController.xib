@@ -246,6 +246,26 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Msm-hP-f90">
+                    <rect key="frame" x="141" y="293" width="165" height="25"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <popUpButtonCell key="cell" type="push" title="verbose" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="45l-6p-v5p" id="mBP-CX-8hP">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" id="vdK-lf-pBv">
+                            <items>
+                                <menuItem title="verbose" state="on" id="45l-6p-v5p"/>
+                                <menuItem title="debug" tag="1" id="S5j-vB-JYJ"/>
+                                <menuItem title="warning" tag="2" id="euC-yD-9yj"/>
+                                <menuItem title="warning" tag="3" id="A71-zj-NnY" userLabel="error"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <action selector="logLevelPopupBtnAction:" target="-2" id="h6M-1p-5fY"/>
+                        <binding destination="nyg-fH-Pug" name="selectedTag" keyPath="values.logLevel" id="Joc-AM-jsE"/>
+                    </connections>
+                </popUpButton>
             </subviews>
             <constraints>
                 <constraint firstItem="1NU-Lr-cuR" firstAttribute="leading" secondItem="bA7-7o-Vd0" secondAttribute="leading" id="3Zo-e3-ao5"/>

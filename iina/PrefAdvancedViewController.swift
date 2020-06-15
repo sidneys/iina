@@ -98,6 +98,24 @@ class PrefAdvancedViewController: PreferenceViewController, PreferenceWindowEmbe
   @IBAction func helpBtnAction(_ sender: AnyObject) {
     NSWorkspace.shared.open(URL(string: AppData.wikiLink)!.appendingPathComponent("MPV-Options-and-Properties"))
   }
+
+  @IBAction func logLevelPopupBtnAction(_ sender: NSPopUpButton) {
+    var level: Logger.Level
+    switch sender.selectedTag() {
+    case 0:
+        level = .debug
+    case 1:
+        level = .verbose
+    case 2:
+        level = .warning
+    case 3:
+        level = .error
+    default:
+        level = .debug
+    }
+
+    Logger.log("Loglevel set: \(level.description)")
+  }
 }
 
 extension PrefAdvancedViewController: NSTableViewDelegate, NSTableViewDataSource, NSControlTextEditingDelegate {
