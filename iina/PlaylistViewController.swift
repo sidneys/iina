@@ -511,7 +511,7 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
     let info = player.info
     let v = tableView.makeView(withIdentifier: identifier, owner: self) as! NSTableCellView
 
-    // set NSTableCellView font size
+    // set textField font size
     let textField = v.textField!
     textField.font = NSFont(descriptor: textField.font!.fontDescriptor, size: NSFont.systemFontSize(for: .regular) * getTextScaleFormatted())
     textField.setFrameOrigin(NSZeroPoint)
@@ -534,6 +534,9 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
         let filename = item.filenameForDisplay
         let displayStr: String = NSString(string: filename).deletingPathExtension
 
+        // set infoLabel font size
+        cellView.infoLabel.font = NSFont(descriptor: cellView.infoLabel.font!.fontDescriptor, size: NSFont.systemFontSize(for: .small) * getTextScaleFormatted())
+
         func getCachedMetadata() -> (artist: String, title: String)? {
           guard Preference.bool(for: .playlistShowMetadata) else { return nil }
           if Preference.bool(for: .playlistShowMetadataInMusicMode) && !player.isInMiniPlayer {
@@ -555,6 +558,7 @@ class PlaylistViewController: NSViewController, NSTableViewDataSource, NSTableVi
           cellView.setTitle(filename)
         }
         // playback progress and duration
+        // set durationLabel font size
         cellView.durationLabel.font = NSFont.monospacedDigitSystemFont(ofSize: NSFont.smallSystemFontSize * getTextScaleFormatted(), weight: .regular)
         cellView.durationLabel.stringValue = ""
         player.playlistQueue.async {
